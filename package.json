@@ -1,7 +1,7 @@
 {
-  "name": "react-rollup-npm-boilerplat",
+  "name": "react-dynamic-stepper",
   "version": "1.0.0",
-  "description": "An example of creating a react npm package",
+  "description": "Advanced and multi-feature stepper component designed to be incredibly versatile for a variety of workflows and use cases.",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "files": [
@@ -32,18 +32,26 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DonAdam2/react-rollup-npm-boilerplate.git"
+    "url": "git+https://github.com/DonAdam2/react-dynamic-stepper.git"
   },
   "keywords": [
-    "react",
-    "button"
+    "stepper",
+    "react-dynamic-stepper",
+    "react-component",
+    "sequence-stepper",
+    "vertical-stepper",
+    "horizontal-stepper",
+    "inline-stepper",
+    "stepper-navigation",
+    "rtl-support",
+    "color-customizable-stepper"
   ],
   "author": "Adam Morsi <adam.morsi@yahoo.com> (https://github.com/DonAdam2)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/DonAdam2/react-rollup-npm-boilerplate/issues"
+    "url": "https://github.com/DonAdam2/react-dynamic-stepper/issues"
   },
-  "homepage": "https://github.com/DonAdam2/react-rollup-npm-boilerplate#readme",
+  "homepage": "https://github.com/DonAdam2/react-dynamic-stepper#readme",
   "devDependencies": {
     "@babel/core": "^7.23.6",
     "@babel/preset-react": "^7.23.3",
