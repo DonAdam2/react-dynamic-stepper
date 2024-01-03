@@ -1,194 +1,219 @@
 # Table of Contents:
 - [Overview](#overview)
-- [Installing & getting started](#installing--getting-started)
-- [Publishing your package](#publishing-your-package)
-- [Setup local NPM registry](#setup-local-npm-registry)
-- [Configuring prettier](#configuring-prettier)
-- [Available scripts](#available-scripts)
+- [Demo](#demo)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Stepper props](#stepper-props)
+- [Features and Methods](#features-and-methods)
 
 ## Overview:
 
-This boilerplate allows you to create npm package fast and easy with the following setup:
+Advanced and multi-feature stepper component designed to be incredibly versatile for a variety of workflows and use cases.
 
-- Storybook to build your component and see it in action before publishing it to npm.
-- Rollup to bundle your package.
-- Commitizen to simplify professional commit messages.
-- standard-version which will bump package version, create a new release tag with the new version and updates CHANGELOG file. 
-
-<p dir="rtl"><a href="#table-of-contents">Back to top</a></p>
-
-## Installing / Getting Started:
-
-- Install packages `pnpm install`
-- Package JSON:
-  - name: add the name of your package.
-  - description: add the description of your package.
-  - repository => url: add the URL of your package.
-  - keywords: add keywords to represent your package (SEO).
-  - author: add your name.
-  - bugs => url: add issues link of your repository.
-  - homepage: add readme link of your repository.
-- src/components:
-  - Add your component with named export in a directory with the same name of your component and don't forget to add index.ts file in the same directory.
-  - Update `src/components/index.ts` to export your component.
-  - Add component stories in a file with this extension `ComponentName.stories.tsx` following the instructions on [storybook](https://storybook.js.org/) site.
-  - Add component test in a file with this extension `ComponentName.test.tsx`.
-- run `pnpm storybook` to see your component during development.
-- run `pnpm commit` to commit your files following **conventional commit** standards.
+It supports the following:
+- Horizontal stepper UI.
+- Vertical stepper UI.
+- Inline stepper UI.
+- Sequence stepper.
+- Right to left languages.
+- Custom pallet.
+- Custom header.
+- Custom footer.
+- Navigate to the required step programmatically.
 
 <p dir="rtl"><a href="#table-of-contents">Back to top</a></p>
 
-## Publishing your package:
+## Demo:
 
-### Create NPM token:
-
-- Log into your [npm](https://www.npmjs.com/login) account.
-- Click on **Edit Profile** button.
-- Click on **Access Tokens**.
-- Click on **Generate New Token**:
-  - Click on **Classic Token**:
-    - Enter token name.
-    - Select **Automation** if you will use GitHub actions, select **Publish** if you will publish you package manually.
-    - Click on **Generate Token**.
-    - Copy the generated token and save it somewhere.
-
-### Publishing a package with GitHub actions:
-
-- Open your repository on GitHub => settings => Secrets and variables => Actions => New repository secret:
-  - Name: **NPM_AUTH_TOKEN**
-  - Secret: paste your npm access token.
-- Create a new release:
-  ```shell
-  pnpm semantic-release
-  ```
-- push your changes to GitHub to run publish workflow.
-
-### Publishing a package manually:
-
-- Run your tests:
-  ```shell
-  pnpm test
-  ```
-- Run semantic release script to create a new release, bump package version and update **CHANGELOG.md** file:
-  ```shell
-  pnpm semantic-release
-  ```
-- Build your package:
-  ```shell
-  pnpm build-lib
-  ```
-- Navigate to **lib** directory:
-  ```shell
-  cd lib
-  ```
-- Publish your npm package:
-  ```shell
-  npm publish --access public
-  ```
+Checkout the demo of this package on [codepen](https://codepen.io/AdamMorsi/pen/qBRazPM)
 
 <p dir="rtl"><a href="#table-of-contents">Back to top</a></p>
 
-## Setup local NPM registry
+## Installation:
 
-- I like to publish my package to a local registry and test it locally before publishing it to NPM.
-- We will use **verdaccio** registry:
-  - Pull verdaccio image:
-  ```shell
-  docker pull verdaccio/verdaccio
-  ```
-  - Run verdaccio container:
-  ```shell
-  docker run -it --rm --name verdaccio -p 4873:4873 verdaccio/verdaccio
-  ```
-  - Create a new user:
-  ```shell
-  npm adduser --registry http://localhost:4873/
-  ```
-  - Publish your package after building it:
-  ```shell
-  npm publish --registry http://localhost:4873/
-  ```
-  - Install your package from your local registry:
-  ```shell
-  npm install <package_name> --registry http://localhost:4873/
-  ```
+- Via npm:
+```shell
+npm install react-dynamic-stepper
+```
+- Via yarn:
+```shell
+yarn add react-dynamic-stepper
+```
+- Via pnpm:
+```shell
+pnpm add react-dynamic-stepper
+```
 
 <p dir="rtl"><a href="#table-of-contents">Back to top</a></p>
 
-## Configuring Prettier:
+## Usage:
 
-This build relies on [Prettier formatter](https://prettier.io/) to enforce code style. And [ESLint](https://eslint.org/) for identifying problematic patterns found in the code.
+```jsx
+import { Stepper } from 'react-dynamic-stepper';
 
-- Setting up prettier:
+const App = () => {
+  const steps = [
+          {
+            header: {
+              label: 'Step 1',
+            },
+            content: <div>First step content</div>,
+            isError: false,
+            isWarning: false,
+            isComplete: true,
+          },
+          {
+            header: {
+              label: 'Step 2',
+            },
+            content: <div>Second step content</div>,
+            onClickHandler: () => console.log('clicked on second step next button'),
+            isLoading: false,
+            isError: false,
+            isComplete: true,
+          },
+          {
+            header: {
+              label: 'Step 3',
+            },
+            content: <div>Third step content</div>,
+            isError: false,
+            isComplete: true,
+          },
+        ];
 
-  1- You can find steps on how to set up prettier formatter with WebStorm/PhpStorm [here](https://prettier.io/docs/en/webstorm.html#running-prettier-on-save-using-file-watcher).
+  const submitStepper = () => {
+    console.log('submitted');
+  };
 
-  **Notes**:
-
-    - It's better to use local `node_modules` version of prettier instead of a global one, to avoid version conflicts (in case the globally installed version does not match the version specified in `package.json`).
-
-  2- Follow the next steps to set up **prettier** and **eslint** in **_VS Code_**:
-
-    - Install `prettier` plugin
-
-    - Install `eslint` plugin
-
-    - Open **_VS Code settings_** `CTRL + ,`:
-
-      a- Search for `formatter` => check **Format on save**
-
-      b- Search for `prettier` => add `.prettierrc` in **_Prettier: Config Path_** section && check **_Prettier: Require Config_**
-
-  3- Please refer to other tutorials if you are using a different IDE.
+  return (
+    <Stepper
+      steps={steps}
+      footerData={{
+        submitHandler: submitStepper,
+      }}
+    />
+  );
+};
+```
 
 <p dir="rtl"><a href="#table-of-contents">Back to top</a></p>
 
-## Available Scripts
+## Stepper props:
 
-In the project directory, you can run:
+| Prop                         | Type                           | Default | Required | Description                                                                                          |
+|------------------------------|--------------------------------|---------| ---       |------------------------------------------------------------------------------------------------------|
+| isRightToLeftLanguage        | Boolean                        | `false` | No | If true, sets the direction of the stepper to **rtl**                                                |
+| isVertical                   | Boolean                        | `false` | No | If true, sets the orientation of the stepper to vertical                                             |
+| isInline                     | Boolean                        | `false` | No | If true, sets the header display of the stepper to inline                                            |
+| isSequenceStepper            | Boolean                        | `false` | No | If true, sets the stepper to sequence mode (forces the user to complete steps in sequence)           |
+| isStepConnector              | Boolean                        | `true`  | No | If false, removes the step connector                                                                 |
+| [ref](#features-and-methods) | `useRef<NavigateToStepHandler>`                        | `null`  | No | It exposes `navigateToStep` function, that can programmatically navigate the user to a specific step |
+| steps                        | [StepInterface[]](#StepInterface) | -       | Yes | Array of steps                                                                                       |
+| footerData                   | [FooterDataInterface[]](#FooterDataInterface)            | -       | Yes | Footer data                                                                                          |
+| pallet                       | [PalletInterface[]](#PalletInterface)                | -       | No | Pallet for custom color codes                                                                        |
 
-### `pnpm storybook`
+<p dir="rtl"><a href="#table-of-contents">Back to top</a></p>
 
-- Runs storybook in development mode.
-- Opens automatically on [http://localhost:6006](http://localhost:6006)
+### StepInterface:
 
-### `pnpm commit`
+| Prop | Type                                            | Default     | Required | Description                                                                |
+| ---  |-------------------------------------------------|-------------| ---       |----------------------------------------------------------------------------|
+| header.label | String                                          | -           | Yes | The label to display on the step header                                    |
+| header.indicator | ReactNode                                       | Step number | No | Custom indicator for the step                                              |
+| content | ReactNode                                       | -           | Yes | The content to display for the step                                        |
+| onClickHandler | Function: `() => void` or `() => Promise<void>` | -           | No | Invoked when the next button of the current step is clicked                |
+| isLoading | Boolean                                         | `false`     | No | If true, the 'Next' button will be disabled                                |
+| isError | Boolean                                         | `false`     | No | If true, will display the step with error UI                               |
+| isWarning | Boolean                                         | `false`     | No | If true, will display the step with warning UI                             |
+| isComplete | Boolean                                         | `false`     | Yes | If true, will display the step with completed UI and enables 'Next' button |
 
-- Creates a professional commit following conventional commit standards.
+<p dir="rtl"><a href="#table-of-contents">Back to top</a></p>
 
-### `pnpm semantic-release`:
+### FooterDataInterface:
 
-- Creates or updates CHANGELOG file.
-- Creates a new release tag.
-- Bump package version in `package.json`.
+| Prop | Type | Default                        | Required | Description                                                          |
+| ---  | ---  |--------------------------------|---       |----------------------------------------------------------------------|
+| prevBtnLabel | String | `Back to ${prevStepLabel}`     | No  | Label for the prev button                                            |
+| prevBtnClassName | String | `undefined`                    | No | CSS classname(s) to be applied to prev button                        |
+| nextBtnLabel | String | `Continue to ${nextStepLabel}` | No  | Label for the next button                                            |
+| nextBtnClassName | String | `undefined`                    | No | CSS classname(s) to be applied to next button                        |
+| submitBtnLabel | String | `Submit`                       | No | Label for submit button in the last step                             |
+| submitBtnClassName | String | `undefined`                    | No | CSS classname(s) to be applied to the submit button in the last step |
+| submitHandler | Function: `() => void` or `() => Promise<void>` | -                              | Yes  | Invoked when the submit button is clicked                            |
 
-### `pnpm build-storybook`
+<p dir="rtl"><a href="#table-of-contents">Back to top</a></p>
 
-- Builds your story book for production.
+### PalletInterface:
 
-### `pnpm build-lib`
+| Prop | Type | Default | Required | Description               |
+| ---  | ---  | ---     | ---      | ---                       |
+| default | String | `#627c90` | Yes | Default color code       |
+| warning | String | `#f1c40f` | Yes | Color code for warning UI |
+| danger | String | `#e95a4b` | Yes | Color code for error UI   |
+| success | String | `#4caf50` | Yes | Color code for success UI |
 
-- Builds your package in the `dist` folder in 2 formats:
-  - CommonJS (CJS).
-  - ECMAScript (ESM).
-- Output your package types into `dist/index.d.ts`
-- Creates a new directory called **lib** and copies the following into it to make your package ready for publishing:
-  - dist folder
-  - package.json
-  - LICENSE
-  - README.md
+<p dir="rtl"><a href="#table-of-contents">Back to top</a></p>
 
-### `pnpm test`
+## Features and Methods
 
-- Runs all test files.
+The **ref** passed to the Stepper component exposes a **navigateToStep** function, that can programmatically navigate the user to a specific step. It can be useful in scenarios when controlling step navigation from outside the Stepper component is required.
 
-### `pnpm test:watch`
+<details>
+<summary>JavaScript</summary>
 
-- Runs all unit test files in `/src` directory using watch mode.
-- Runs all your tests once, then again on every change of your source code.
+```jsx
+import { useRef } from 'react';
+import { Stepper } from 'react-dynamic-stepper';
 
-### `pnpm test:clear`
+const App = () => {
+  const stepperRef = useRef(null);
 
-- Clears test cache.
+  return (
+    <>
+      <button
+        onClick={() => {
+          stepperRef.current?.navigateToStep(1);
+        }}
+      >
+        Navigate to step 2 programmatically
+      </button>
+      <Stepper
+        ref={stepperRef}
+        /* OTHER PROPS*/
+      />
+    </>
+  );
+};
+```
+</details>
+<details>
+<summary>TypeScript</summary>
+
+```typescript jsx
+import { useRef } from 'react';
+import { Stepper, NavigateToStepHandler } from 'react-dynamic-stepper';
+
+const App = () => {
+  const stepperRef = useRef<NavigateToStepHandler>(null);
+
+  return (
+    <>
+      <button
+        onClick={() => {
+          stepperRef.current?.navigateToStep(1);
+        }}
+      >
+        Navigate to step 2 programmatically
+      </button>
+      <Stepper
+        ref={stepperRef}
+        /* OTHER PROPS*/
+      />
+    </>
+  );
+};
+```
+</details>
 
 <p dir="rtl"><a href="#table-of-contents">Back to top</a></p>

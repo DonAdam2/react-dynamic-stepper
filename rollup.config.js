@@ -40,7 +40,9 @@ export default [
         babelHelpers: 'bundled',
         exclude: 'node_modules/**',
       }),
-      typescript(),
+      typescript({
+        tsconfig: './tsconfig.build.json',
+      }),
       terser(),
       postcss({
         plugins: [autoprefixer],
@@ -61,7 +63,7 @@ export default [
   },
   {
     input: 'dist/index.d.ts',
-    output: [{ file: 'dist/index.d.ts', format: 'es' }],
+    output: [{ file: 'dist/react-dynamic-stepper.d.ts', format: 'es' }],
     plugins: [dts()],
   },
 ];

@@ -1,0 +1,336 @@
+$white: #ffffff;
+$black: #000000;
+$grey: #e3e8ec;
+$grey2: #cfd7de;
+$primary: #1976d2;
+$dimensions: 2;
+$stepHeadPadding: 0.5;
+
+.stepper-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+
+  .stepper-head-body-wrapper {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  /* styles of default stepper */
+  .stepper-head {
+    display: flex;
+    position: relative;
+    width: 100%;
+    user-select: none;
+
+    .stepper {
+      &-step {
+        position: relative;
+        text-align: center;
+        padding: $stepHeadPadding * 1rem;
+        flex-basis: 100%;
+
+        &.is-right-to-left {
+          &.is-step-connector {
+            &:after {
+              left: -50%;
+            }
+          }
+        }
+
+        &.is-active {
+          .stepper-indicator-info {
+            border-color: var(--default-background-color);
+            background-color: var(--default-background-color);
+            cursor: initial;
+          }
+
+          .stepper-label {
+            color: var(--default-background-color);
+            cursor: initial;
+          }
+        }
+
+        &.is-complete {
+          .stepper-indicator-info {
+            border-color: var(--success-background-color);
+            background-color: var(--success-background-color);
+            cursor: pointer;
+          }
+
+          .stepper-label {
+            color: var(--success-background-color);
+            cursor: pointer;
+          }
+
+          &.is-step-connector {
+            &:after {
+              background-color: var(--success-background-color);
+            }
+          }
+        }
+
+        &.is-active {
+          .stepper-indicator-info,
+          .stepper-label {
+            cursor: initial;
+          }
+        }
+
+        &.is-warning {
+          .stepper-indicator-info {
+            border-color: var(--warning-background-color);
+            background-color: var(--warning-background-color);
+          }
+
+          .stepper-label {
+            color: var(--warning-background-color);
+          }
+
+          &.is-step-connector {
+            &:after {
+              background-color: var(--warning-background-color);
+            }
+          }
+        }
+
+        &.is-error {
+          .stepper-indicator-info {
+            border-color: var(--danger-background-color);
+            background-color: var(--danger-background-color);
+          }
+
+          .stepper-label {
+            color: var(--danger-background-color);
+          }
+
+          &.is-step-connector {
+            &:after {
+              background-color: var(--danger-background-color);
+            }
+          }
+        }
+
+        &.is-step-connector {
+          &:after {
+            content: ' ';
+            position: absolute;
+            left: 50%;
+            top: 1.5rem;
+            width: 100%;
+            height: 0.125rem;
+            background-color: $grey;
+            z-index: 1;
+          }
+
+          &:last-child:after {
+            display: none;
+          }
+        }
+      }
+
+      &-indicator {
+        position: relative;
+        display: block;
+        z-index: 2;
+
+        &-info {
+          position: relative;
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+          width: calc($dimensions * 1rem);
+          height: calc($dimensions * 1rem);
+          border: 1px solid $grey;
+          border-radius: 50%;
+          background-color: $grey;
+          font-size: 1rem;
+          line-height: 2.5rem;
+          text-align: center;
+          color: $white;
+          z-index: 2;
+
+          .stepper-tick {
+            width: 14px;
+            fill: $white;
+          }
+        }
+      }
+
+      &-label {
+        position: relative;
+        display: block;
+        margin-top: 0.5rem;
+        color: $grey2;
+        z-index: 2;
+      }
+    }
+  }
+
+  /* styles of inline stepper */
+  .inline-stepper-head {
+    @media (min-width: 650px) {
+      &.is-step-connector {
+        .stepper-step {
+          &:after {
+            top: 50%;
+            transform: translateY(-50%);
+          }
+        }
+      }
+
+      .stepper-indicator,
+      .stepper-label {
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      .stepper-label {
+        text-align: left;
+        padding: 0 calc(($dimensions/ 4) * 1rem);
+        background: $white;
+        margin: 0;
+      }
+    }
+  }
+
+  /* styles of vertical stepper */
+  .stepper-head-body-wrapper-vertical {
+    flex-direction: row;
+
+    .vertical-stepper-head {
+      flex-direction: column;
+      justify-content: center;
+      width: auto;
+
+      .inner-vertical-head-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 70%;
+      }
+
+      .stepper-step {
+        display: flex;
+        text-align: start;
+
+        &:last-child {
+          flex-basis: auto;
+        }
+
+        &.is-step-connector {
+          &:not(:last-child) {
+            &::before {
+              content: '';
+              position: absolute;
+              top: 10px;
+              left: calc((($dimensions / 2) + $stepHeadPadding) * 1rem);
+              height: 100%;
+              border-right: 2px solid $grey;
+            }
+          }
+
+          &.is-right-to-left {
+            &:not(:last-child) {
+              &::before {
+                left: auto;
+                right: calc((($dimensions / 2) + $stepHeadPadding) * 1rem);
+              }
+            }
+          }
+
+          &:after {
+            content: none;
+          }
+
+          &.is-complete {
+            &:not(:last-child) {
+              &::before {
+                border-right-color: var(--success-background-color);
+              }
+            }
+          }
+
+          &.is-warning {
+            &:not(:last-child) {
+              &::before {
+                border-right-color: var(--warning-background-color);
+              }
+            }
+          }
+
+          &.is-error {
+            &:not(:last-child) {
+              &::before {
+                border-right-color: var(--danger-background-color);
+              }
+            }
+          }
+
+          &.is-right-to-left {
+            &:after {
+              right: calc((($dimensions / 2) + $stepHeadPadding) * 1rem);
+              left: auto;
+            }
+          }
+        }
+      }
+
+      .stepper-label {
+        padding-inline-start: calc(($dimensions / 4) * 1rem);
+      }
+
+      + .stepper-body {
+        margin-inline-start: calc($dimensions * 1rem);
+      }
+    }
+  }
+
+  .stepper-body {
+    flex: 1;
+    min-height: 100px;
+    padding: 10px;
+  }
+
+  .stepper-footer {
+    display: flex;
+    align-items: center;
+    padding: 0 10px 10px 10px;
+
+    &-btn {
+      color: rgba($black, 0.87);
+      padding: 6px 16px;
+      font-size: 0.875rem;
+      min-width: 64px;
+      font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+      font-weight: 500;
+      line-height: 1.75;
+      border-radius: 4px;
+      letter-spacing: 0.02857em;
+      cursor: pointer;
+      border: none;
+      outline: none;
+
+      &.primary {
+        color: $white;
+        background-color: $primary;
+      }
+
+      &.success {
+        color: $white;
+        background-color: var(--success-background-color);
+      }
+
+      &:disabled {
+        color: rgba($black, 0.26);
+        background-color: rgba($black, 0.12);
+        cursor: not-allowed;
+      }
+    }
+  }
+}
