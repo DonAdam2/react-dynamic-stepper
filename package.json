@@ -1,7 +1,7 @@
 {
   "name": "react-dynamic-stepper",
-  "version": "1.0.1",
-  "description": "Advanced and multi-feature stepper component designed to be incredibly versatile for a variety of workflows and use cases.",
+  "version": "1.0.2",
+  "description": "Advanced and multi-feature react stepper component designed to be incredibly versatile for a variety of workflows and use cases.",
   "main": "dist/react-dynamic-stepper.cjs.js",
   "module": "dist/react-dynamic-stepper.esm.js",
   "files": [
@@ -35,9 +35,9 @@
     "url": "git+https://github.com/DonAdam2/react-dynamic-stepper.git"
   },
   "keywords": [
+    "react",
     "stepper",
-    "react-dynamic-stepper",
-    "react-component",
+    "component",
     "sequence-stepper",
     "vertical-stepper",
     "horizontal-stepper",
