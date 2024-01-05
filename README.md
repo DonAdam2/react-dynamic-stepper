@@ -159,6 +159,10 @@ const App = () => {
 
 The **ref** passed to the Stepper component exposes a **navigateToStep** function, that can programmatically navigate the user to a specific step. It can be useful in scenarios when controlling step navigation from outside the Stepper component is required.
 
+> ### ***Important Note***:
+>
+> Make sure to mark the required steps as **completed** if you want to **navigate programmatically** so that you can submit your stepper. This ensures that all necessary steps have been taken before the finish line.
+
 <details>
 <summary>JavaScript</summary>
 
