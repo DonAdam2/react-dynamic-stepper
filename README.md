@@ -157,6 +157,8 @@ const App = () => {
 
 ## Features and Methods
 
+### Navigate to step programmatically:
+
 The **ref** passed to the Stepper component exposes a **navigateToStep** function, that can programmatically navigate the user to a specific step. It can be useful in scenarios when controlling step navigation from outside the Stepper component is required.
 
 > ### ***Important Note***:
@@ -184,7 +186,7 @@ const App = () => {
       </button>
       <Stepper
         ref={stepperRef}
-        /* OTHER PROPS*/
+        /* OTHER PROPS */
       />
     </>
   );
@@ -212,12 +214,30 @@ const App = () => {
       </button>
       <Stepper
         ref={stepperRef}
-        /* OTHER PROPS*/
+        /* OTHER PROPS */
       />
     </>
   );
 };
 ```
 </details>
+
+<p dir="rtl"><a href="#table-of-contents">Back to top</a></p>
+
+### Invoke a function on Next button click of current step
+
+- `step.onClickHandler` => This is invoked when the 'Next' button of the current step is clicked.
+- If your `onClickHandler` returns a Promise and you want to navigate to the next step only if the Promise resolves successfully, you need to `throw error` inside the **catch** block:
+```typescript
+const submitCurrentStep = async () => {
+    try {
+      /* Your business logic here */
+    } catch (error) {
+      throw error;
+    } finally {
+      /* Cleanup code here */
+    }
+  };
+```
 
 <p dir="rtl"><a href="#table-of-contents">Back to top</a></p>
