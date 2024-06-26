@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [1.0.4](https://github.com/DonAdam2/react-dynamic-stepper/compare/v1.0.3...v1.0.4) (2024-06-26)
 
+* **README.md:** update README file
+
 ### 1.0.3 (2024-01-23)
 
 
