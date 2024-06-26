@@ -1,3 +1,7 @@
+
+[![Npm version][badge_npm-version]][external_npm]
+[![Npm downloads][badge_npm-downloads]][external_npm]
+
 # Table of Contents:
 - [Overview](#overview)
 - [Demo](#demo)
@@ -5,6 +9,7 @@
 - [Usage](#usage)
 - [Stepper props](#stepper-props)
 - [Features and Methods](#features-and-methods)
+- [Resources](#resources)
 
 ## Overview:
 
@@ -241,3 +246,14 @@ const submitCurrentStep = async () => {
 ```
 
 <p dir="rtl"><a href="#table-of-contents">Back to top</a></p>
+
+## Resources
+
+- [Changelog][changelog]
+
+<p dir="rtl"><a href="#table-of-contents">Back to top</a></p>
+
+[changelog]: https://github.com/DonAdam2/react-dynamic-stepper/blob/main/CHANGELOG.md
+[badge_npm-version]: https://img.shields.io/npm/v/react-dynamic-stepper.svg
+[badge_npm-downloads]: https://img.shields.io/npm/dm/react-dynamic-stepper.svg
+[external_npm]: https://npmjs.org/package/react-dynamic-stepper
