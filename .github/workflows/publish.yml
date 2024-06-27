@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [17.x, 18.x, 20.x]
+        node-version: [16.x, 17.x, 18.x, 20.x]
         os: [ubuntu-latest, windows-latest]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
@@ -29,8 +29,8 @@ jobs:
 
       - name: Install Packages
         run:  |
-          npm install -g pnpm@8.15.7
-          pnpm install --frozen-lockfile
+          npm install --location=global pnpm@8.15.7
+          pnpm install
 
       - name: Run tests
         run: pnpm test
