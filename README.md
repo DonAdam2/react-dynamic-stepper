@@ -1,6 +1,9 @@
 
-[![Npm version][badge_npm-version]][external_npm]
-[![Npm downloads][badge_npm-downloads]][external_npm]
+[![Npm version][badge_npm-version]][package_link]
+[![Npm downloads][badge_npm-downloads]][package_link]
+[![Npm minified][badge_npm-minified]][package_link]
+[![Npm minified gzip][badge_npm-minified-gzip]][package_link]
+[![Npm CICD][badge_npm-cicd]][package_link]
 
 # Table of Contents:
 - [Overview](#overview)
@@ -30,7 +33,7 @@ It supports the following:
 
 ## Demo:
 
-Checkout the demo of this package on [codepen](https://codepen.io/AdamMorsi/pen/qBRazPM)
+Checkout the demo of this package on [codepen][package_demo-link]
 
 <p dir="rtl"><a href="#table-of-contents">Back to top</a></p>
 
@@ -256,4 +259,8 @@ const submitCurrentStep = async () => {
 [changelog]: https://github.com/DonAdam2/react-dynamic-stepper/blob/main/CHANGELOG.md
 [badge_npm-version]: https://img.shields.io/npm/v/react-dynamic-stepper.svg
 [badge_npm-downloads]: https://img.shields.io/npm/dm/react-dynamic-stepper.svg
-[external_npm]: https://npmjs.org/package/react-dynamic-stepper
+[badge_npm-minified]: https://img.shields.io/bundlephobia/min/react-dynamic-stepper
+[badge_npm-minified-gzip]: https://img.shields.io/bundlejs/size/react-dynamic-stepper
+[badge_npm-cicd]: https://github.com/DonAdam2/react-dynamic-stepper/actions/workflows/publish.yml/badge.svg
+[package_link]: https://npmjs.org/package/react-dynamic-stepper
+[package_demo-link]: https://codepen.io/AdamMorsi/pen/qBRazPM
