@@ -1,6 +1,6 @@
 {
   "name": "react-dynamic-stepper",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Advanced and multi-feature react stepper component designed to be incredibly versatile for a variety of workflows and use cases.",
   "main": "dist/react-dynamic-stepper.cjs.js",
   "module": "dist/react-dynamic-stepper.esm.js",
