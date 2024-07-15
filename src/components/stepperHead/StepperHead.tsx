@@ -51,6 +51,7 @@ export const StepperHead: FC<StepperHeadInterface> = ({
             index={i}
             navigateToStepHandler={navigateToStepHandler}
             isActive={i === currentTabIndex}
+            isKeepIndicatorOnComplete={el.header.isKeepIndicatorOnComplete}
             isComplete={isSequenceStepper ? el.isComplete && i <= currentTabIndex : el.isComplete}
             isWarning={el.isWarning}
             isError={el.isError}

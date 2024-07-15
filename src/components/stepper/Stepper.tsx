@@ -24,6 +24,7 @@ export interface StepInterface {
   header: {
     label: string;
     indicator?: ReactNode;
+    isKeepIndicatorOnComplete?: boolean;
   };
   content: ReactNode;
   onClickHandler?: () => void | Promise<void>;

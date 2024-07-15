@@ -295,6 +295,103 @@ function StepperWithIcons(props: StepperInterface & RefAttributes<NavigateToStep
   return <Stepper {...props} steps={stepsWithIcons} />;
 }
 
+function StepperWithIconsAndNoCheckIconOnComplete(
+  props: StepperInterface & RefAttributes<NavigateToStepHandler>
+) {
+  const [acceptFirstTerms, setAcceptFirstTerms] = useState({
+      checked: false,
+      touched: false,
+    }),
+    [acceptSecondTerms, setAcceptSecondTerms] = useState({
+      checked: false,
+      touched: false,
+    }),
+    [acceptThirdTerms, setAcceptThirdTerms] = useState({
+      checked: false,
+      touched: false,
+    });
+
+  const firstTermsHandler = () => {
+    setAcceptFirstTerms((prev) => ({ checked: !prev.checked, touched: true }));
+  };
+
+  const secondTermsHandler = () => {
+    setAcceptSecondTerms((prev) => ({ checked: !prev.checked, touched: true }));
+  };
+
+  const thirdTermsHandler = () => {
+    setAcceptThirdTerms((prev) => ({ checked: !prev.checked, touched: true }));
+  };
+
+  const stepsWithIcons = [
+    {
+      header: {
+        label: 'Step 1',
+        indicator: <AddDocumentsIcon />,
+        isKeepIndicatorOnComplete: false,
+      },
+      content: (
+        <div>
+          <label>
+            <input
+              type="checkbox"
+              checked={acceptFirstTerms.checked}
+              onChange={firstTermsHandler}
+            />{' '}
+            Accept first terms and conditions
+          </label>
+        </div>
+      ),
+      isError: !acceptFirstTerms.checked && acceptFirstTerms.touched,
+      isComplete: acceptFirstTerms.checked,
+    },
+    {
+      header: {
+        label: 'Step 2',
+        indicator: <SignersIcon />,
+        isKeepIndicatorOnComplete: false,
+      },
+      content: (
+        <div>
+          <label>
+            <input
+              type="checkbox"
+              checked={acceptSecondTerms.checked}
+              onChange={secondTermsHandler}
+            />{' '}
+            Accept second terms and conditions
+          </label>
+        </div>
+      ),
+      isError: !acceptSecondTerms.checked && acceptSecondTerms.touched,
+      isComplete: acceptSecondTerms.checked,
+    },
+    {
+      header: {
+        label: 'Step 2',
+        indicator: <PrepareDocumentsIcon />,
+        isKeepIndicatorOnComplete: false,
+      },
+      content: (
+        <div>
+          <label>
+            <input
+              type="checkbox"
+              checked={acceptThirdTerms.checked}
+              onChange={thirdTermsHandler}
+            />{' '}
+            Accept third terms and conditions
+          </label>
+        </div>
+      ),
+      isError: !acceptThirdTerms.checked && acceptThirdTerms.touched,
+      isComplete: acceptThirdTerms.checked,
+    },
+  ];
+
+  return <Stepper {...props} steps={stepsWithIcons} />;
+}
+
 export const Sequence: Story = {
   args: {
     isSequenceStepper: true,
@@ -351,6 +448,15 @@ export const WithIcons: Story = {
     },
   },
   render: (args) => <StepperWithIcons {...args} />,
+};
+
+export const WithIconsAndNoCheckIconOnComplete: Story = {
+  args: {
+    footerData: {
+      submitHandler: action('With icons stepper submitted'),
+    },
+  },
+  render: (args) => <StepperWithIconsAndNoCheckIconOnComplete {...args} />,
 };
 
 export const CustomPallet: Story = {

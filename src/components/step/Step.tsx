@@ -3,6 +3,7 @@ import { PalletInterface } from '../stepper';
 import styles from '../stepper/Stepper.module.scss';
 
 export interface StepInterface {
+  isKeepIndicatorOnComplete?: boolean;
   indicator: ReactNode;
   label: string;
   navigateToStepHandler: (index: number) => void;
@@ -17,6 +18,7 @@ export interface StepInterface {
 }
 
 export const Step: FC<StepInterface> = ({
+  isKeepIndicatorOnComplete = true,
   indicator,
   label,
   navigateToStepHandler,
@@ -68,7 +70,7 @@ export const Step: FC<StepInterface> = ({
           className={styles['stepper-indicator-info']}
           onClick={isComplete || isError ? () => navigateToStepHandler(index) : undefined}
         >
-          {isComplete ? (
+          {isKeepIndicatorOnComplete && isComplete ? (
             <svg
               className={styles['stepper-tick']}
               xmlns="http://www.w3.org/2000/svg"
