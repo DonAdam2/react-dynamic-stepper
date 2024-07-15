@@ -18,7 +18,7 @@ export interface StepInterface {
 }
 
 export const Step: FC<StepInterface> = ({
-  isKeepIndicatorOnComplete = true,
+  isKeepIndicatorOnComplete = false,
   indicator,
   label,
   navigateToStepHandler,
@@ -71,7 +71,7 @@ export const Step: FC<StepInterface> = ({
           className={styles['stepper-indicator-info']}
           onClick={isComplete || isError ? () => navigateToStepHandler(index) : undefined}
         >
-          {isKeepIndicatorOnComplete && isComplete ? (
+          {!isKeepIndicatorOnComplete && isComplete ? (
             <svg
               className={styles['stepper-tick']}
               xmlns="http://www.w3.org/2000/svg"

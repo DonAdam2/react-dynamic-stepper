@@ -328,7 +328,7 @@ function StepperWithIconsAndNoCheckIconOnComplete(
       header: {
         label: 'Step 1',
         indicator: <AddDocumentsIcon />,
-        isKeepIndicatorOnComplete: false,
+        isKeepIndicatorOnComplete: true,
       },
       content: (
         <div>
@@ -349,7 +349,7 @@ function StepperWithIconsAndNoCheckIconOnComplete(
       header: {
         label: 'Step 2',
         indicator: <SignersIcon />,
-        isKeepIndicatorOnComplete: false,
+        isKeepIndicatorOnComplete: true,
       },
       content: (
         <div>
@@ -370,7 +370,7 @@ function StepperWithIconsAndNoCheckIconOnComplete(
       header: {
         label: 'Step 2',
         indicator: <PrepareDocumentsIcon />,
-        isKeepIndicatorOnComplete: false,
+        isKeepIndicatorOnComplete: true,
       },
       content: (
         <div>

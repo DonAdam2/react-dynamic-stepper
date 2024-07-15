@@ -129,7 +129,7 @@ const App = () => {
 |-------------------|-------------------------------------------------|-------------| ---       |----------------------------------------------------------------------------|
 | header.label      | String                                          | -           | Yes | The label to display on the step header                                    |
 | header.indicator  | ReactNode                                       | Step number | No | Custom indicator for the step                                              |
-| header.indicator.isKeepIndicatorOnComplete | Boolean                | `true`      | No | Keep header indicator when step is completed                               |
+| header.indicator.isKeepIndicatorOnComplete | Boolean                | `false`     | No | Keep header indicator when step is completed                               |
 | content           | ReactNode                                       | -           | Yes | The content to display for the step                                        |
 | onClickHandler    | Function: `() => void` or `() => Promise<void>` | -           | No | Invoked when the next button of the current step is clicked                |
 | isLoading         | Boolean                                         | `false`     | No | If true, the 'Next' button will be disabled                                |
