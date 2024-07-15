@@ -466,6 +466,7 @@ export const CustomPallet: Story = {
       warning: '#D6D000',
       danger: '#FE7A15',
       success: '#55741A',
+      disabled: '#bdbdbd',
     },
     footerData: {
       submitHandler: action('Custom pallet stepper submitted'),

@@ -18,6 +18,7 @@ export interface PalletInterface {
   warning: string;
   danger: string;
   success: string;
+  disabled: string;
 }
 
 export interface StepInterface {
@@ -64,6 +65,7 @@ export const Stepper = forwardRef<NavigateToStepHandler, StepperInterface>(
         warning: '#f1c40f',
         danger: '#e95a4b',
         success: '#4caf50',
+        disabled: '#e3e8ec',
       },
     },
     ref

@@ -155,12 +155,13 @@ const App = () => {
 
 ### PalletInterface:
 
-| Prop | Type | Default | Required | Description               |
-| ---  | ---  | ---     | ---      | ---                       |
-| default | String | `#627c90` | Yes | Default color code       |
-| warning | String | `#f1c40f` | Yes | Color code for warning UI |
-| danger | String | `#e95a4b` | Yes | Color code for error UI   |
-| success | String | `#4caf50` | Yes | Color code for success UI |
+| Prop     | Type | Default | Required | Description                |
+|----------| ---  | ---     | ---      |----------------------------|
+| default  | String | `#627c90` | Yes | Default color code         |
+| warning  | String | `#f1c40f` | Yes | Color code for warning UI  |
+| danger   | String | `#e95a4b` | Yes | Color code for error UI    |
+| success  | String | `#4caf50` | Yes | Color code for success UI  |
+| disabled | String | `#e3e8ec` | Yes | Color code for disabled UI |
 
 <p dir="rtl"><a href="#table-of-contents">Back to top</a></p>
 

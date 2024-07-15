@@ -62,6 +62,7 @@ export const Step: FC<StepInterface> = ({
           '--warning-background-color': pallet?.warning,
           '--danger-background-color': pallet?.danger,
           '--success-background-color': pallet?.success,
+          '--disabled-background-color': pallet?.disabled,
         } as CSSProperties
       }
     >
