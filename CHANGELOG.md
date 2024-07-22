@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/DonAdam2/react-dynamic-stepper/compare/v1.1.1...v1.2.0) (2024-07-22)
+
+
+### Features
+
+* **stepperfooter.tsx:** update step interface ([85fa799](https://github.com/DonAdam2/react-dynamic-stepper/commit/85fa799f4454dec5e495148e87054c8221e1cce6)), closes [#4](https://github.com/DonAdam2/react-dynamic-stepper/issues/4)
+
 ### [1.1.1](https://github.com/DonAdam2/react-dynamic-stepper/compare/v1.1.0...v1.1.1) (2024-07-15)
 
 ## [1.1.0](https://github.com/DonAdam2/react-dynamic-stepper/compare/v1.0.4...v1.1.0) (2024-07-15)
