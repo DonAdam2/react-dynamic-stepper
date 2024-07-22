@@ -125,17 +125,19 @@ const App = () => {
 
 ### StepInterface:
 
-| Prop              | Type                                            | Default     | Required | Description                                                                |
-|-------------------|-------------------------------------------------|-------------| ---       |----------------------------------------------------------------------------|
-| header.label      | String                                          | -           | Yes | The label to display on the step header                                    |
-| header.indicator  | ReactNode                                       | Step number | No | Custom indicator for the step                                              |
-| header.indicator.isKeepIndicatorOnComplete | Boolean                | `false`     | No | Keep header indicator when step is completed                               |
-| content           | ReactNode                                       | -           | Yes | The content to display for the step                                        |
-| onClickHandler    | Function: `() => void` or `() => Promise<void>` | -           | No | Invoked when the next button of the current step is clicked                |
-| isLoading         | Boolean                                         | `false`     | No | If true, the 'Next' button will be disabled                                |
-| isError           | Boolean                                         | `false`     | No | If true, will display the step with error UI                               |
-| isWarning         | Boolean                                         | `false`     | No | If true, will display the step with warning UI                             |
-| isComplete        | Boolean                                         | `false`     | Yes | If true, will display the step with completed UI and enables 'Next' button |
+| Prop              | Type                                           | Default                                    | Required | Description                                                                |
+|-------------------|------------------------------------------------|--------------------------------------------|----------|----------------------------------------------------------------------------|
+| header.label      | String                                         | -                                          | Yes      | The label to display on the step header                                    |
+| header.indicator  | ReactNode                                      | Step number                                | No       | Custom indicator for the step                                              |
+| header.indicator.isKeepIndicatorOnComplete | Boolean                                        | `false`                                    | No       | Keep header indicator when step is completed                               |
+| footer.nextButtonLabel | String                                    | `Continue to ${nextStepLabel}` or `Submit` | No | Set next button label of the current step                                  |
+| footer.prevButtonLabel | String                                    | `Back to ${prevStepLabel}` | No | Set prev button label of the current step                                  |
+| content           | ReactNode                                      | -                                          | Yes      | The content to display for the step                                        |
+| onClickHandler    | Function: `() => void` or `() => Promise<void>` | -                                          | No       | Invoked when the next button of the current step is clicked                |
+| isLoading         | Boolean                                        | `false`                                    | No       | If true, the 'Next' button will be disabled                                |
+| isError           | Boolean                                        | `false`                                    | No       | If true, will display the step with error UI                               |
+| isWarning         | Boolean                                        | `false`                                    | No       | If true, will display the step with warning UI                             |
+| isComplete        | Boolean                                        | `false`                                    | Yes      | If true, will display the step with completed UI and enables 'Next' button |
 
 <p dir="rtl"><a href="#table-of-contents">Back to top</a></p>
 
