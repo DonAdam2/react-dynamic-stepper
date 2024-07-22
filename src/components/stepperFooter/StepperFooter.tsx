@@ -56,7 +56,9 @@ export const StepperFooter: FC<StepperFooterInterface> = ({
           }`}
           onClick={previousStepHandler}
         >
-          {footerData.prevBtnLabel ?? `Back to ${steps[currentTabIndex - 1].header.label}`}
+          {footerData.prevBtnLabel ??
+            steps[currentTabIndex]?.footer?.prevButtonLabel ??
+            `Back to ${steps[currentTabIndex - 1].header.label}`}
         </button>
       )}
       <button
@@ -81,8 +83,10 @@ export const StepperFooter: FC<StepperFooterInterface> = ({
         style={{ '--success-background-color': successColor } as CSSProperties}
       >
         {isLastStep
-          ? footerData.submitBtnLabel ?? 'Submit'
-          : footerData.nextBtnLabel ?? `Continue to ${steps[currentTabIndex + 1].header.label}`}
+          ? (footerData.submitBtnLabel ?? 'Submit')
+          : (footerData.nextBtnLabel ??
+            steps[currentTabIndex]?.footer?.nextButtonLabel ??
+            `Continue to ${steps[currentTabIndex + 1].header.label}`)}
       </button>
     </div>
   );

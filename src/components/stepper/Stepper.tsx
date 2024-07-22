@@ -27,6 +27,10 @@ export interface StepInterface {
     indicator?: ReactNode;
     isKeepIndicatorOnComplete?: boolean;
   };
+  footer?: {
+    nextButtonLabel: string;
+    prevButtonLabel?: string;
+  };
   content: ReactNode;
   onClickHandler?: () => void | Promise<void>;
   isLoading?: boolean;

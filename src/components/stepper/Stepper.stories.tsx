@@ -146,6 +146,152 @@ function RenderStepper(props: StepperInterface & RefAttributes<NavigateToStepHan
     </>
   );
 }
+
+function StepperWithCustomStepsFooter(
+  props: StepperInterface & RefAttributes<NavigateToStepHandler>
+) {
+  const [acceptFirstTerms, setAcceptFirstTerms] = useState({
+      checked: false,
+      touched: false,
+    }),
+    [acceptSecondTerms, setAcceptSecondTerms] = useState({
+      checked: false,
+      touched: false,
+    }),
+    [acceptThirdTerms, setAcceptThirdTerms] = useState({
+      checked: false,
+      touched: false,
+    }),
+    [isWarning, setIsWarning] = useState(false),
+    [isSecondStepLoading, setIsSecondStepLoading] = useState(false),
+    stepperRef = useRef<NavigateToStepHandler>(null);
+
+  const firstTermsHandler = () => {
+    setAcceptFirstTerms((prev) => ({ checked: !prev.checked, touched: true }));
+  };
+
+  const secondTermsHandler = () => {
+    setAcceptSecondTerms((prev) => ({ checked: !prev.checked, touched: true }));
+  };
+
+  const thirdTermsHandler = () => {
+    setAcceptThirdTerms((prev) => ({ checked: !prev.checked, touched: true }));
+  };
+
+  const isWarningHandler = () => {
+    setIsWarning((prev) => !prev);
+  };
+
+  //for demo purposes only
+  const timeout = (ms: number) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  };
+
+  const secondStepAsyncFunc = async () => {
+    //it can be an API call
+    setIsSecondStepLoading(true);
+    await timeout(3000);
+    setIsSecondStepLoading(false);
+    console.log('second step clicked');
+  };
+
+  const steps = [
+    {
+      header: {
+        label: 'Step 1',
+      },
+      footer: {
+        nextButtonLabel: 'Go to step 2',
+      },
+      content: (
+        <div>
+          <label style={{ display: 'block', marginBottom: 5 }}>
+            <input
+              type="checkbox"
+              checked={acceptFirstTerms.checked}
+              onChange={firstTermsHandler}
+            />{' '}
+            Accept first terms and conditions
+          </label>
+          <label style={{ display: 'block' }}>
+            <input type="checkbox" checked={isWarning} onChange={isWarningHandler} /> Is warning
+          </label>
+        </div>
+      ),
+      isError: !acceptFirstTerms.checked && acceptFirstTerms.touched,
+      isWarning: isWarning,
+      isComplete: acceptFirstTerms.checked,
+    },
+    {
+      header: {
+        label: 'Step 2',
+      },
+      footer: {
+        nextButtonLabel: 'Go to step 3',
+        prevButtonLabel: 'Go to step 1',
+      },
+      content: (
+        <div>
+          <label>
+            <input
+              type="checkbox"
+              checked={acceptSecondTerms.checked}
+              onChange={secondTermsHandler}
+            />{' '}
+            Accept second terms and conditions
+          </label>
+        </div>
+      ),
+      onClickHandler: () => secondStepAsyncFunc(),
+      isLoading: isSecondStepLoading,
+      isError: !acceptSecondTerms.checked && acceptSecondTerms.touched,
+      isComplete: acceptSecondTerms.checked,
+    },
+    {
+      header: {
+        label: 'Step 3',
+      },
+      content: (
+        <div>
+          <label>
+            <input
+              type="checkbox"
+              checked={acceptThirdTerms.checked}
+              onChange={thirdTermsHandler}
+            />{' '}
+            Accept third terms and conditions
+          </label>
+        </div>
+      ),
+      isError: !acceptThirdTerms.checked && acceptThirdTerms.touched,
+      isComplete: acceptThirdTerms.checked,
+    },
+  ];
+
+  return (
+    <>
+      <button
+        style={{
+          color: '#ffffff',
+          backgroundColor: '#1976d2',
+          padding: '6px 16px',
+          fontSize: '0.875rem',
+          border: 'none',
+          outline: 'none',
+          borderRadius: 4,
+          marginInlineStart: 10,
+        }}
+        onClick={() => {
+          stepperRef.current?.navigateToStep(1);
+        }}
+      >
+        Navigate to step 2 programmatically
+      </button>
+      <Stepper {...props} ref={stepperRef} steps={steps} />
+    </>
+  );
+}
+
 const AddDocumentsIcon = ({ className = '' }) => (
   <svg
     className={className}
@@ -473,6 +619,15 @@ export const CustomPallet: Story = {
     },
   },
   render: (args) => <RenderStepper {...args} />,
+};
+
+export const CustomStepFooter: Story = {
+  args: {
+    footerData: {
+      submitHandler: action('With icons stepper submitted'),
+    },
+  },
+  render: (args) => <StepperWithCustomStepsFooter {...args} />,
 };
 
 export const CustomFooter: Story = {
