@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/DonAdam2/react-dynamic-stepper/compare/v1.2.1...v1.3.0) (2024-07-27)
+
+
+### Features
+
+* **stepperfooter:** add isPreventNextClick flag ([75313e1](https://github.com/DonAdam2/react-dynamic-stepper/commit/75313e10a288543ab3765336101712088130a469))
+
 ### [1.2.1](https://github.com/DonAdam2/react-dynamic-stepper/compare/v1.2.0...v1.2.1) (2024-07-22)
 
 ## [1.2.0](https://github.com/DonAdam2/react-dynamic-stepper/compare/v1.1.1...v1.2.0) (2024-07-22)
