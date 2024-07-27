@@ -28,8 +28,9 @@ export interface StepInterface {
     isKeepIndicatorOnComplete?: boolean;
   };
   footer?: {
-    nextButtonLabel: string;
+    nextButtonLabel?: string;
     prevButtonLabel?: string;
+    isPreventNextClick?: boolean;
   };
   content: ReactNode;
   onClickHandler?: () => void | Promise<void>;
@@ -88,12 +89,14 @@ export const Stepper = forwardRef<NavigateToStepHandler, StepperInterface>(
     );
 
     const nextStepHandler = () => {
-      setCurrentTabIndex((prev) => {
-        if (prev !== steps.length - 1) {
-          return prev + 1;
-        }
-        return prev;
-      });
+      if (!steps[currentTabIndex].footer?.isPreventNextClick) {
+        setCurrentTabIndex((prev) => {
+          if (prev !== steps.length - 1) {
+            return prev + 1;
+          }
+          return prev;
+        });
+      }
     };
 
     const previousStepHandler = () => {

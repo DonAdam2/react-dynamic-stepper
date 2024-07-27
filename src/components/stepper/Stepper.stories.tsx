@@ -147,6 +147,145 @@ function RenderStepper(props: StepperInterface & RefAttributes<NavigateToStepHan
   );
 }
 
+function PreventNextClickStepper(props: StepperInterface & RefAttributes<NavigateToStepHandler>) {
+  const [acceptFirstTerms, setAcceptFirstTerms] = useState({
+      checked: false,
+      touched: false,
+    }),
+    [acceptSecondTerms, setAcceptSecondTerms] = useState({
+      checked: false,
+      touched: false,
+    }),
+    [acceptThirdTerms, setAcceptThirdTerms] = useState({
+      checked: false,
+      touched: false,
+    }),
+    [isPreventNextClick, setIsPreventNextClick] = useState(true),
+    [isWarning, setIsWarning] = useState(false),
+    [isSecondStepLoading, setIsSecondStepLoading] = useState(false);
+
+  const firstTermsHandler = () => {
+    setAcceptFirstTerms((prev) => ({ checked: !prev.checked, touched: true }));
+  };
+
+  const secondTermsHandler = () => {
+    setAcceptSecondTerms((prev) => ({ checked: !prev.checked, touched: true }));
+  };
+
+  const thirdTermsHandler = () => {
+    setAcceptThirdTerms((prev) => ({ checked: !prev.checked, touched: true }));
+  };
+
+  const isWarningHandler = () => {
+    setIsWarning((prev) => !prev);
+  };
+
+  //for demo purposes only
+  const timeout = (ms: number) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  };
+
+  const secondStepAsyncFunc = async () => {
+    //it can be an API call
+    setIsSecondStepLoading(true);
+    await timeout(3000);
+    setIsSecondStepLoading(false);
+    console.log('second step clicked');
+  };
+
+  const steps = [
+    {
+      header: {
+        label: 'Step 1',
+      },
+      footer: {
+        isPreventNextClick,
+      },
+      content: (
+        <div>
+          <label style={{ display: 'block', marginBottom: 5 }}>
+            <input
+              type="checkbox"
+              checked={acceptFirstTerms.checked}
+              onChange={firstTermsHandler}
+            />{' '}
+            Accept first terms and conditions
+          </label>
+          <label style={{ display: 'block' }}>
+            <input type="checkbox" checked={isWarning} onChange={isWarningHandler} /> Is warning
+          </label>
+          <button
+            style={{
+              color: '#ffffff',
+              backgroundColor: '#1976d2',
+              padding: '6px 16px',
+              fontSize: '0.875rem',
+              border: 'none',
+              outline: 'none',
+              borderRadius: 4,
+              marginTop: 15,
+              marginInlineEnd: 15,
+            }}
+            onClick={() => {
+              setIsPreventNextClick((prev) => !prev);
+            }}
+          >
+            Toggle isPreventNextClick
+          </button>
+          <span style={{ color: isPreventNextClick ? 'red' : 'green' }}>
+            {isPreventNextClick ? 'You cant go to the next step' : 'You can you to the next step'}
+          </span>
+        </div>
+      ),
+      isError: !acceptFirstTerms.checked && acceptFirstTerms.touched,
+      isWarning: isWarning,
+      isComplete: acceptFirstTerms.checked,
+    },
+    {
+      header: {
+        label: 'Step 2',
+      },
+      content: (
+        <div>
+          <label>
+            <input
+              type="checkbox"
+              checked={acceptSecondTerms.checked}
+              onChange={secondTermsHandler}
+            />{' '}
+            Accept second terms and conditions
+          </label>
+        </div>
+      ),
+      onClickHandler: () => secondStepAsyncFunc(),
+      isLoading: isSecondStepLoading,
+      isError: !acceptSecondTerms.checked && acceptSecondTerms.touched,
+      isComplete: acceptSecondTerms.checked,
+    },
+    {
+      header: {
+        label: 'Step 3',
+      },
+      content: (
+        <div>
+          <label>
+            <input
+              type="checkbox"
+              checked={acceptThirdTerms.checked}
+              onChange={thirdTermsHandler}
+            />{' '}
+            Accept third terms and conditions
+          </label>
+        </div>
+      ),
+      isError: !acceptThirdTerms.checked && acceptThirdTerms.touched,
+      isComplete: acceptThirdTerms.checked,
+    },
+  ];
+
+  return <Stepper {...props} steps={steps} />;
+}
+
 function StepperWithCustomStepsFooter(
   props: StepperInterface & RefAttributes<NavigateToStepHandler>
 ) {
@@ -575,6 +714,15 @@ export const Vertical: Story = {
     },
   },
   render: (args) => <RenderStepper {...args} />,
+};
+
+export const PreventNextClick: Story = {
+  args: {
+    footerData: {
+      submitHandler: action('Prevent next step click stepper submitted'),
+    },
+  },
+  render: (args) => <PreventNextClickStepper {...args} />,
 };
 
 export const NoConnector: Story = {

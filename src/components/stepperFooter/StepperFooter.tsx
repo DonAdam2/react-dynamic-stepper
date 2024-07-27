@@ -32,16 +32,24 @@ export const StepperFooter: FC<StepperFooterInterface> = ({
   }
 
   const submitCurrentStep = async () => {
-    try {
-      await steps[currentTabIndex].onClickHandler?.();
-      nextStepHandler();
-    } catch (err) {
-      console.log(err);
+    if (!steps[currentTabIndex].footer?.isPreventNextClick) {
+      try {
+        await steps[currentTabIndex].onClickHandler?.();
+        nextStepHandler();
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
   const submitHandler = async () => {
-    await footerData.submitHandler();
+    if (!steps[currentTabIndex].footer?.isPreventNextClick) {
+      try {
+        await footerData.submitHandler();
+      } catch (err) {
+        console.log(err);
+      }
+    }
   };
 
   return (
