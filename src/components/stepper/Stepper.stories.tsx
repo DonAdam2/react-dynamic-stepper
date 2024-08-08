@@ -97,7 +97,9 @@ function RenderStepper(props: StepperInterface & RefAttributes<NavigateToStepHan
           </label>
         </div>
       ),
-      onClickHandler: () => secondStepAsyncFunc(),
+      footer: {
+        onClickHandler: () => secondStepAsyncFunc(),
+      },
       isLoading: isSecondStepLoading,
       isError: !acceptSecondTerms.checked && acceptSecondTerms.touched,
       isComplete: acceptSecondTerms.checked,
@@ -257,7 +259,9 @@ function PreventNextClickStepper(props: StepperInterface & RefAttributes<Navigat
           </label>
         </div>
       ),
-      onClickHandler: () => secondStepAsyncFunc(),
+      footer: {
+        onClickHandler: () => secondStepAsyncFunc(),
+      },
       isLoading: isSecondStepLoading,
       isError: !acceptSecondTerms.checked && acceptSecondTerms.touched,
       isComplete: acceptSecondTerms.checked,
@@ -368,6 +372,7 @@ function StepperWithCustomStepsFooter(
       footer: {
         nextButtonLabel: 'Go to step 3',
         prevButtonLabel: 'Go to step 1',
+        onClickHandler: () => secondStepAsyncFunc(),
       },
       content: (
         <div>
@@ -381,7 +386,6 @@ function StepperWithCustomStepsFooter(
           </label>
         </div>
       ),
-      onClickHandler: () => secondStepAsyncFunc(),
       isLoading: isSecondStepLoading,
       isError: !acceptSecondTerms.checked && acceptSecondTerms.touched,
       isComplete: acceptSecondTerms.checked,

@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/DonAdam2/react-dynamic-stepper/compare/v1.3.0...v2.0.0) (2024-08-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* **stepperfooter.tsx:** You need to move onClickHandler from each step into the footer object of each step
+
+### Features
+
+* **stepperfooter.tsx:** move onClickHandler into footer ([f91aec2](https://github.com/DonAdam2/react-dynamic-stepper/commit/f91aec2cc4ece9131a0b2db8aaee86fe71df9eb2))
+
 ## [1.3.0](https://github.com/DonAdam2/react-dynamic-stepper/compare/v1.2.1...v1.3.0) (2024-07-27)
 
 
