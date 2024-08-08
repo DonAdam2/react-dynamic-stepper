@@ -31,9 +31,9 @@ export interface StepInterface {
     nextButtonLabel?: string;
     prevButtonLabel?: string;
     isPreventNextClick?: boolean;
+    onClickHandler?: () => void | Promise<void>;
   };
   content: ReactNode;
-  onClickHandler?: () => void | Promise<void>;
   isLoading?: boolean;
   isError?: boolean;
   isWarning?: boolean;
