@@ -681,6 +681,56 @@ function StepperWithIconsAndNoCheckIconOnComplete(
   return <Stepper {...props} steps={stepsWithIcons} />;
 }
 
+const ChevronRightIcon = () => (
+  <svg width="7" height="14" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M0.999999 1L8 8L1 15"
+      stroke="#64748B"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <defs>
+      <linearGradient
+        id="paint0_linear_1540_1997"
+        x1="4.5"
+        y1="15"
+        x2="4.5"
+        y2="1"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="var(--theme-primary-light)" />
+        <stop offset="1" stopColor="var(--theme-primary-dark)" />
+      </linearGradient>
+    </defs>
+  </svg>
+);
+
+const ChevronDownIcon = () => (
+  <svg width="14" height="7" viewBox="0 0 16 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M15 1L8 8L1 1"
+      stroke="#64748B"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <defs>
+      <linearGradient
+        id="paint0_linear_1631_1851"
+        x1="1"
+        y1="4.5"
+        x2="15"
+        y2="4.5"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="var(--theme-primary-light)" />
+        <stop offset="1" stopColor="var(--theme-primary-dark)" />
+      </linearGradient>
+    </defs>
+  </svg>
+);
+
 export const Default: Story = {
   args: {
     footerData: {
@@ -742,6 +792,27 @@ export const PreventNextClick: Story = {
 export const NoConnector: Story = {
   args: {
     isStepConnector: false,
+    footerData: {
+      submitHandler: action('No connector stepper submitted'),
+    },
+  },
+  render: (args) => <RenderStepper {...args} />,
+};
+
+export const CustomConnector: Story = {
+  args: {
+    customConnector: <ChevronRightIcon />,
+    footerData: {
+      submitHandler: action('No connector stepper submitted'),
+    },
+  },
+  render: (args) => <RenderStepper {...args} />,
+};
+
+export const VerticalCustomConnector: Story = {
+  args: {
+    customConnector: <ChevronDownIcon />,
+    isVertical: true,
     footerData: {
       submitHandler: action('No connector stepper submitted'),
     },

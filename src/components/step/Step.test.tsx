@@ -153,4 +153,28 @@ describe('Step', () => {
       '--success-background-color': stepProps.pallet?.success,
     });
   });
+
+  it('applies has-custom-connector class when customConnector is provided', () => {
+    const navigateToStepHandler = jest.fn(),
+      customConnector = <div data-testid="my-custom-connector">Custom Connector</div>,
+      stepProps: StepInterface = {
+        indicator: '1',
+        label: 'First Step',
+        navigateToStepHandler,
+        index: 0,
+        isActive: false,
+        isComplete: false,
+        isWarning: false,
+        isError: false,
+        isStepConnector: true,
+        isRightToLeftLanguage: false,
+        customConnector,
+      };
+
+    render(<Step {...stepProps} />);
+
+    const stepWrapper = screen.getByTestId('step-wrapper');
+
+    expect(stepWrapper).toHaveClass(styles['has-custom-connector']);
+  });
 });

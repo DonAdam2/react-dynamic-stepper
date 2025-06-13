@@ -1,5 +1,5 @@
 import { PalletInterface, StepInterface } from '../stepper';
-import { FC } from 'react';
+import { FC, Fragment, ReactNode } from 'react';
 import { ConditionalWrapper } from '../conditionalWrapper/ConditionalWrapper';
 import styles from '../stepper/Stepper.module.scss';
 import { Step } from '../step/Step';
@@ -15,6 +15,7 @@ export interface StepperHeadInterface {
   currentTabIndex: number;
   pallet?: PalletInterface;
   disableStepHeaderClick?: boolean;
+  customConnector?: ReactNode;
 }
 
 export const StepperHead: FC<StepperHeadInterface> = ({
@@ -28,6 +29,7 @@ export const StepperHead: FC<StepperHeadInterface> = ({
   currentTabIndex,
   pallet,
   disableStepHeaderClick,
+  customConnector,
 }) => {
   const classes = [styles['stepper-head']];
 
@@ -48,22 +50,35 @@ export const StepperHead: FC<StepperHeadInterface> = ({
         )}
       >
         {steps.map((el, i) => (
-          <Step
-            key={i}
-            index={i}
-            navigateToStepHandler={navigateToStepHandler}
-            isActive={i === currentTabIndex}
-            isKeepIndicatorOnComplete={el.header.isKeepIndicatorOnComplete}
-            isComplete={isSequenceStepper ? el.isComplete && i <= currentTabIndex : el.isComplete}
-            isWarning={el.isWarning}
-            isError={el.isError}
-            isRightToLeftLanguage={isRightToLeftLanguage}
-            indicator={el.header.indicator ? el.header.indicator : i + 1}
-            label={el.header.label}
-            pallet={pallet}
-            isStepConnector={isStepConnector}
-            disableStepHeaderClick={disableStepHeaderClick}
-          />
+          <Fragment key={i}>
+            <Step
+              index={i}
+              navigateToStepHandler={navigateToStepHandler}
+              isActive={i === currentTabIndex}
+              isKeepIndicatorOnComplete={el.header.isKeepIndicatorOnComplete}
+              isComplete={isSequenceStepper ? el.isComplete && i <= currentTabIndex : el.isComplete}
+              isWarning={el.isWarning}
+              isError={el.isError}
+              isRightToLeftLanguage={isRightToLeftLanguage}
+              indicator={el.header.indicator ? el.header.indicator : i + 1}
+              label={el.header.label}
+              pallet={pallet}
+              isStepConnector={isStepConnector}
+              disableStepHeaderClick={disableStepHeaderClick}
+              customConnector={customConnector}
+              isVertical={isVertical}
+            />
+            {customConnector && isStepConnector && i < steps.length - 1 && (
+              <div
+                className={`${styles['custom-connector-wrapper']} ${
+                  isVertical ? styles['vertical-connector'] : styles['inline-connector']
+                }`}
+                data-testid="custom-connector"
+              >
+                {customConnector}
+              </div>
+            )}
+          </Fragment>
         ))}
       </ConditionalWrapper>
     </div>

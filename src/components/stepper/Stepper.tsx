@@ -50,6 +50,7 @@ export interface StepperInterface {
   steps: StepInterface[];
   footerData: FooterDataInterface;
   pallet?: PalletInterface;
+  customConnector?: ReactNode;
 }
 
 export type NavigateToStepHandler = {
@@ -67,6 +68,7 @@ export const Stepper = forwardRef<NavigateToStepHandler, StepperInterface>(
       disableStepHeaderClick,
       steps,
       footerData,
+      customConnector,
       pallet = {
         default: '#627c90',
         warning: '#f1c40f',
@@ -135,6 +137,7 @@ export const Stepper = forwardRef<NavigateToStepHandler, StepperInterface>(
             pallet={pallet}
             isStepConnector={isStepConnector}
             disableStepHeaderClick={disableStepHeaderClick}
+            customConnector={customConnector}
           />
           <div className={styles['stepper-body']}>
             {steps.map((el, i) => (

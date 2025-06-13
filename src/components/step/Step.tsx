@@ -16,6 +16,8 @@ export interface StepInterface {
   isRightToLeftLanguage: boolean;
   pallet?: PalletInterface;
   disableStepHeaderClick?: boolean;
+  isVertical?: boolean;
+  customConnector?: ReactNode;
 }
 
 export const Step: FC<StepInterface> = ({
@@ -32,6 +34,8 @@ export const Step: FC<StepInterface> = ({
   isRightToLeftLanguage,
   pallet,
   disableStepHeaderClick,
+  customConnector,
+  isVertical,
 }) => {
   const classes = [styles['stepper-step']];
 
@@ -56,6 +60,9 @@ export const Step: FC<StepInterface> = ({
   if (disableStepHeaderClick) {
     classes.push(styles['is-disable-step-click']);
   }
+  if (customConnector) {
+    classes.push(styles['has-custom-connector']);
+  }
 
   return (
     <div
@@ -63,6 +70,7 @@ export const Step: FC<StepInterface> = ({
       className={classes.join(' ')}
       style={
         {
+          flexBasis: isVertical && isStepConnector && customConnector ? 'auto' : '100%',
           '--default-background-color': pallet?.default,
           '--warning-background-color': pallet?.warning,
           '--danger-background-color': pallet?.danger,
