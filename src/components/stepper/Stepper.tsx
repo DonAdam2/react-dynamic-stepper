@@ -46,6 +46,7 @@ export interface StepperInterface {
   isInline?: boolean;
   isSequenceStepper?: boolean;
   isStepConnector?: boolean;
+  disableStepHeaderClick?: boolean;
   steps: StepInterface[];
   footerData: FooterDataInterface;
   pallet?: PalletInterface;
@@ -63,6 +64,7 @@ export const Stepper = forwardRef<NavigateToStepHandler, StepperInterface>(
       isInline = false,
       isSequenceStepper = false,
       isStepConnector = true,
+      disableStepHeaderClick,
       steps,
       footerData,
       pallet = {
@@ -132,6 +134,7 @@ export const Stepper = forwardRef<NavigateToStepHandler, StepperInterface>(
             isSequenceStepper={isSequenceStepper}
             pallet={pallet}
             isStepConnector={isStepConnector}
+            disableStepHeaderClick={disableStepHeaderClick}
           />
           <div className={styles['stepper-body']}>
             {steps.map((el, i) => (

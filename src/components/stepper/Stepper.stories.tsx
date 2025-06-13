@@ -681,20 +681,20 @@ function StepperWithIconsAndNoCheckIconOnComplete(
   return <Stepper {...props} steps={stepsWithIcons} />;
 }
 
-export const Sequence: Story = {
+export const Default: Story = {
   args: {
-    isSequenceStepper: true,
     footerData: {
-      submitHandler: action('Sequence stepper submitted'),
+      submitHandler: action('Default stepper submitted'),
     },
   },
   render: (args) => <RenderStepper {...args} />,
 };
 
-export const Default: Story = {
+export const Sequence: Story = {
   args: {
+    isSequenceStepper: true,
     footerData: {
-      submitHandler: action('Default stepper submitted'),
+      submitHandler: action('Sequence stepper submitted'),
     },
   },
   render: (args) => <RenderStepper {...args} />,
@@ -715,6 +715,16 @@ export const Vertical: Story = {
     isVertical: true,
     footerData: {
       submitHandler: action('Vertical stepper submitted'),
+    },
+  },
+  render: (args) => <RenderStepper {...args} />,
+};
+
+export const DisableStepHeaderClick: Story = {
+  args: {
+    disableStepHeaderClick: true,
+    footerData: {
+      submitHandler: action('Sequence stepper submitted'),
     },
   },
   render: (args) => <RenderStepper {...args} />,

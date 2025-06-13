@@ -74,6 +74,16 @@ $stepHeadPadding: 0.5;
           }
         }
 
+        &.is-disable-step-click {
+          .stepper-indicator-info {
+            cursor: initial;
+          }
+
+          .stepper-label {
+            cursor: initial;
+          }
+        }
+
         &.is-active {
           .stepper-indicator-info,
           .stepper-label {

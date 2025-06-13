@@ -14,6 +14,7 @@ export interface StepperHeadInterface {
   isRightToLeftLanguage: boolean;
   currentTabIndex: number;
   pallet?: PalletInterface;
+  disableStepHeaderClick?: boolean;
 }
 
 export const StepperHead: FC<StepperHeadInterface> = ({
@@ -26,6 +27,7 @@ export const StepperHead: FC<StepperHeadInterface> = ({
   isRightToLeftLanguage,
   currentTabIndex,
   pallet,
+  disableStepHeaderClick,
 }) => {
   const classes = [styles['stepper-head']];
 
@@ -60,6 +62,7 @@ export const StepperHead: FC<StepperHeadInterface> = ({
             label={el.header.label}
             pallet={pallet}
             isStepConnector={isStepConnector}
+            disableStepHeaderClick={disableStepHeaderClick}
           />
         ))}
       </ConditionalWrapper>

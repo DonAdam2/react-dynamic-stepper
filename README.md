@@ -116,6 +116,7 @@ const App = () => {
 | isInline                     | Boolean                        | `false` | No | If true, sets the header display of the stepper to inline                                            |
 | isSequenceStepper            | Boolean                        | `false` | No | If true, sets the stepper to sequence mode (forces the user to complete steps in sequence)           |
 | isStepConnector              | Boolean                        | `true`  | No | If false, removes the step connector                                                                 |
+| disableStepHeaderClick       | Boolean                        | `false` | No | If true, disables clicking on step headers (indicator and label) to navigate directly to completed or error steps |
 | [ref](#features-and-methods) | `useRef<NavigateToStepHandler>`                        | `null`  | No | It exposes `navigateToStep` function, that can programmatically navigate the user to a specific step |
 | steps                        | [StepInterface[]](#StepInterface) | -       | Yes | Array of steps                                                                                       |
 | footerData                   | [FooterDataInterface[]](#FooterDataInterface)            | -       | Yes | Footer data                                                                                          |

@@ -15,6 +15,7 @@ export interface StepInterface {
   isStepConnector: boolean;
   isRightToLeftLanguage: boolean;
   pallet?: PalletInterface;
+  disableStepHeaderClick?: boolean;
 }
 
 export const Step: FC<StepInterface> = ({
@@ -30,6 +31,7 @@ export const Step: FC<StepInterface> = ({
   isStepConnector,
   isRightToLeftLanguage,
   pallet,
+  disableStepHeaderClick,
 }) => {
   const classes = [styles['stepper-step']];
 
@@ -51,6 +53,9 @@ export const Step: FC<StepInterface> = ({
   if (isStepConnector) {
     classes.push(styles['is-step-connector']);
   }
+  if (disableStepHeaderClick) {
+    classes.push(styles['is-disable-step-click']);
+  }
 
   return (
     <div
@@ -69,7 +74,11 @@ export const Step: FC<StepInterface> = ({
       <div className={styles['stepper-indicator']}>
         <span
           className={styles['stepper-indicator-info']}
-          onClick={isComplete || isError ? () => navigateToStepHandler(index) : undefined}
+          onClick={
+            (isComplete || isError) && !disableStepHeaderClick
+              ? () => navigateToStepHandler(index)
+              : undefined
+          }
         >
           {!isKeepIndicatorOnComplete && isComplete ? (
             <svg
@@ -87,7 +96,11 @@ export const Step: FC<StepInterface> = ({
       </div>
       <div
         className={styles['stepper-label']}
-        onClick={isComplete || isError ? () => navigateToStepHandler(index) : undefined}
+        onClick={
+          (isComplete || isError) && !disableStepHeaderClick
+            ? () => navigateToStepHandler(index)
+            : undefined
+        }
       >
         {label}
       </div>
