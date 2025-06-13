@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { StepperHead, StepperHeadInterface } from './StepperHead';
-import { expect } from '@storybook/test';
+import { expect } from 'storybook/test';
 import styles from '../stepper/Stepper.module.scss';
 
 describe('StepperHead', () => {

@@ -1,6 +1,6 @@
 import { Stepper } from './Stepper';
 import { render, screen } from '@testing-library/react';
-import { expect } from '@storybook/test';
+import { expect } from 'storybook/test';
 
 describe('Stepper', () => {
   const steps = [

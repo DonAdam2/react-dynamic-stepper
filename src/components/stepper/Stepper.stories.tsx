@@ -1,7 +1,7 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 import { NavigateToStepHandler, Stepper, StepperInterface } from './Stepper';
 import { RefAttributes, useRef, useState } from 'react';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 
 //👇 This default export determines where your story goes in the story list
 const meta: Meta<typeof Stepper> = {

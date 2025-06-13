@@ -1,5 +1,5 @@
 import { render, fireEvent, screen } from '@testing-library/react';
-import { expect } from '@storybook/test';
+import { expect } from 'storybook/test';
 import { Step, StepInterface } from './Step';
 import styles from '../stepper/Stepper.module.scss';
 
@@ -139,6 +139,7 @@ describe('Step', () => {
           warning: '#f1c40f',
           danger: '#e95a4b',
           success: '#4caf50',
+          disabled: '#e3e8ec',
         },
       };
 
