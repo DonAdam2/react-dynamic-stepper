@@ -36,7 +36,9 @@ describe('StepperFooter', () => {
         isLastStep: false,
         nextStepHandler,
         footerData: {
-          submitHandler,
+          submitBtn: {
+            onClickHandler: submitHandler,
+          },
         },
         steps,
         currentTabIndex: 1,
@@ -49,7 +51,7 @@ describe('StepperFooter', () => {
 
     expect(previousStepHandler).toHaveBeenCalled();
   });
-  it('renders correct class name when prevBtnClassName is set', () => {
+  it('renders correct class name when prevBtn className is set', () => {
     const previousStepHandler = jest.fn(),
       nextStepHandler = jest.fn(),
       submitHandler = jest.fn(),
@@ -59,8 +61,12 @@ describe('StepperFooter', () => {
         isLastStep: false,
         nextStepHandler,
         footerData: {
-          submitHandler,
-          prevBtnClassName: 'prev-button',
+          prevBtn: {
+            className: 'prev-button',
+          },
+          submitBtn: {
+            onClickHandler: submitHandler,
+          },
         },
         steps,
         currentTabIndex: 1,
@@ -82,7 +88,9 @@ describe('StepperFooter', () => {
         isLastStep: false,
         nextStepHandler,
         footerData: {
-          submitHandler,
+          submitBtn: {
+            onClickHandler: submitHandler,
+          },
         },
         steps,
         currentTabIndex: 0,
@@ -110,7 +118,9 @@ describe('StepperFooter', () => {
       isLastStep: false,
       nextStepHandler,
       footerData: {
-        submitHandler,
+        submitBtn: {
+          onClickHandler: submitHandler,
+        },
       },
       steps: newSteps,
       currentTabIndex: 0,
@@ -123,7 +133,7 @@ describe('StepperFooter', () => {
 
     expect(nextStepHandler).toHaveBeenCalled();
   });
-  it('renders correct class name when nextBtnClassName is set', () => {
+  it('renders correct class name when nextBtn className is set', () => {
     const previousStepHandler = jest.fn(),
       nextStepHandler = jest.fn(),
       submitHandler = jest.fn(),
@@ -133,8 +143,12 @@ describe('StepperFooter', () => {
         isLastStep: false,
         nextStepHandler,
         footerData: {
-          submitHandler,
-          nextBtnClassName: 'next-button',
+          nextBtn: {
+            className: 'next-button',
+          },
+          submitBtn: {
+            onClickHandler: submitHandler,
+          },
         },
         steps,
         currentTabIndex: 0,
@@ -156,7 +170,9 @@ describe('StepperFooter', () => {
         isLastStep: true,
         nextStepHandler,
         footerData: {
-          submitHandler,
+          submitBtn: {
+            onClickHandler: submitHandler,
+          },
         },
         steps,
         currentTabIndex: 2,
@@ -170,7 +186,7 @@ describe('StepperFooter', () => {
     expect(submitHandler).not.toHaveBeenCalled();
     expect(submitButton).toBeDisabled();
   });
-  it('invokes submitHandler when all steps are completed', () => {
+  it('invokes submitButton onClickHandler when all steps are completed', () => {
     const previousStepHandler = jest.fn(),
       nextStepHandler = jest.fn(),
       submitHandler = jest.fn(),
@@ -180,7 +196,9 @@ describe('StepperFooter', () => {
         isLastStep: true,
         nextStepHandler,
         footerData: {
-          submitHandler,
+          submitBtn: {
+            onClickHandler: submitHandler,
+          },
         },
         steps: steps.map((el) => ({ ...el, isComplete: true })),
         currentTabIndex: 2,
@@ -194,7 +212,7 @@ describe('StepperFooter', () => {
     expect(submitHandler).toHaveBeenCalled();
     expect(submitButton).toBeEnabled();
   });
-  it('renders correct class name when submitBtnClassName is set', () => {
+  it('renders correct class name when submitBtn className is set', () => {
     const previousStepHandler = jest.fn(),
       nextStepHandler = jest.fn(),
       submitHandler = jest.fn(),
@@ -204,8 +222,10 @@ describe('StepperFooter', () => {
         isLastStep: true,
         nextStepHandler,
         footerData: {
-          submitHandler,
-          submitBtnClassName: 'submit-button',
+          submitBtn: {
+            className: 'submit-button',
+            onClickHandler: submitHandler,
+          },
         },
         steps,
         currentTabIndex: 2,
@@ -213,8 +233,8 @@ describe('StepperFooter', () => {
 
     render(<StepperFooter {...footerProps} />);
 
-    const prevButton = screen.getByText(/submit/i);
+    const submitButton = screen.getByText(/submit/i);
 
-    expect(prevButton).toHaveClass('submit-button');
+    expect(submitButton).toHaveClass('submit-button');
   });
 });

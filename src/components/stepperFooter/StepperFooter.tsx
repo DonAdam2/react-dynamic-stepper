@@ -46,7 +46,7 @@ export const StepperFooter: FC<StepperFooterInterface> = ({
   const submitHandler = async () => {
     if (!steps[currentTabIndex].footer?.isPreventNextClick) {
       try {
-        await footerData.submitHandler();
+        await footerData.submitBtn.onClickHandler();
       } catch (err) {
         console.log(err);
         throw err;
@@ -61,22 +61,20 @@ export const StepperFooter: FC<StepperFooterInterface> = ({
     >
       {isPrevBtn && (
         <button
-          className={`${
-            footerData.prevBtnClassName ? footerData.prevBtnClassName : styles['stepper-footer-btn']
-          }`}
+          className={`${footerData?.prevBtn?.className ?? styles['stepper-footer-btn']}`}
           onClick={previousStepHandler}
         >
-          {footerData.prevBtnLabel ??
+          {footerData?.prevBtn?.label ??
             steps[currentTabIndex]?.footer?.prevButtonLabel ??
             `Back to ${steps[currentTabIndex - 1].header.label}`}
         </button>
       )}
       <button
         className={`${
-          !isLastStep && footerData.nextBtnClassName
-            ? footerData.nextBtnClassName
-            : isLastStep && footerData.submitBtnClassName
-              ? footerData.submitBtnClassName
+          !isLastStep && footerData?.nextBtn?.className
+            ? footerData.nextBtn.className
+            : isLastStep && footerData?.submitBtn?.className
+              ? footerData.submitBtn.className
               : classes.join(' ')
         }`}
         onClick={
@@ -93,8 +91,8 @@ export const StepperFooter: FC<StepperFooterInterface> = ({
         style={{ '--success-background-color': successColor } as CSSProperties}
       >
         {isLastStep
-          ? (footerData.submitBtnLabel ?? 'Submit')
-          : (footerData.nextBtnLabel ??
+          ? (footerData?.submitBtn?.label ?? 'Submit')
+          : (footerData?.nextBtn?.label ??
             steps[currentTabIndex]?.footer?.nextButtonLabel ??
             `Continue to ${steps[currentTabIndex + 1].header.label}`)}
       </button>

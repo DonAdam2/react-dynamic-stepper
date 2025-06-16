@@ -75,7 +75,9 @@ const App = () => {
               label: 'Step 2',
             },
             content: <div>Second step content</div>,
-            onClickHandler: () => console.log('clicked on second step next button'),
+            footer: {
+              onClickHandler: () => console.log('clicked on second step next button'),
+            },
             isLoading: false,
             isError: false,
             isComplete: true,
@@ -98,7 +100,9 @@ const App = () => {
     <Stepper
       steps={steps}
       footerData={{
-        submitHandler: submitStepper,
+        submitBtn: {
+          onClickHandler: submitStepper,
+        },
       }}
     />
   );
@@ -129,9 +133,10 @@ const App = () => {
 
 | Prop                                       | Type                                            | Default                                    | Required | Description                                                                                                              |
 |--------------------------------------------|-------------------------------------------------|--------------------------------------------|----------|--------------------------------------------------------------------------------------------------------------------------|
+ | id                                         | String                                          | -                                          | No       | Unique identifier for the step (required when using navigateToStepById)                                                 |
 | header.label                               | String                                          | -                                          | Yes      | The label to display on the step header                                                                                  |
 | header.indicator                           | ReactNode                                       | Step number                                | No       | Custom indicator for the step                                                                                            |
-| header.indicator.isKeepIndicatorOnComplete | Boolean                | `false`                                    | No       | Keep header indicator when step is completed                                                                             |
+| header.isKeepIndicatorOnComplete | Boolean                | `false`                                    | No       | Keep header indicator when step is completed                                                                             |
 | footer.nextButtonLabel                     | String                                     | `Continue to ${nextStepLabel}` or `Submit` | No | Set next button label of the current step                                                                                |
 | footer.prevButtonLabel                     | String                                     | `Back to ${prevStepLabel}` | No | Set prev button label of the current step                                                                                |
 | footer.isPreventNextClick                  | Boolean                                 | `false` | No | If true, clicking the ‘Next’ or ‘Submit’ button for the current step will not trigger any action unless its set to false |
@@ -148,13 +153,13 @@ const App = () => {
 
 | Prop | Type | Default                        | Required | Description                                                          |
 | ---  | ---  |--------------------------------|---       |----------------------------------------------------------------------|
-| prevBtnLabel | String | `Back to ${prevStepLabel}`     | No  | Label for the prev button                                            |
-| prevBtnClassName | String | `undefined`                    | No | CSS classname(s) to be applied to prev button                        |
-| nextBtnLabel | String | `Continue to ${nextStepLabel}` | No  | Label for the next button                                            |
-| nextBtnClassName | String | `undefined`                    | No | CSS classname(s) to be applied to next button                        |
-| submitBtnLabel | String | `Submit`                       | No | Label for submit button in the last step                             |
-| submitBtnClassName | String | `undefined`                    | No | CSS classname(s) to be applied to the submit button in the last step |
-| submitHandler | Function: `() => void` or `() => Promise<void>` | -                              | Yes  | Invoked when the submit button is clicked                            |
+| prevBtn.label | String | `Back to ${prevStepLabel}`     | No  | Label for the prev button                                            |
+| prevBtn.className | String | `undefined`                    | No | CSS classname(s) to be applied to prev button                        |
+| nextBtn.label | String | `Continue to ${nextStepLabel}` | No  | Label for the next button                                            |
+| nextBtn.className | String | `undefined`                    | No | CSS classname(s) to be applied to next button                        |
+| submitBtn.label | String | `Submit`                       | No | Label for submit button in the last step                             |
+| submitBtn.className | String | `undefined`                    | No | CSS classname(s) to be applied to the submit button in the last step |
+| submitBtn.onClickHandler | Function: `() => void` or `() => Promise<void>` | -                              | Yes  | Invoked when the submit button is clicked                            |
 
 <p dir="rtl"><a href="#table-of-contents">Back to top</a></p>
 
@@ -292,7 +297,7 @@ const App = () => {
 
 ### Invoke a function on Next button click of current step
 
-- `step.onClickHandler` => This is invoked when the 'Next' button of the current step is clicked.
+- `step.footer.onClickHandler` => This is invoked when the 'Next' button of the current step is clicked.
 - If your `onClickHandler` returns a Promise and you want to navigate to the next step only if the Promise resolves successfully, you need to `throw error` inside the **catch** block:
 ```typescript
 const submitCurrentStep = async () => {

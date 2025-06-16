@@ -846,7 +846,9 @@ const ChevronDownIcon = () => (
 export const Default: Story = {
   args: {
     footerData: {
-      submitHandler: action('Default stepper submitted'),
+      submitBtn: {
+        onClickHandler: action('Default stepper submitted'),
+      },
     },
   },
   render: (args) => <RenderStepper {...args} />,
@@ -856,7 +858,9 @@ export const Sequence: Story = {
   args: {
     isSequenceStepper: true,
     footerData: {
-      submitHandler: action('Sequence stepper submitted'),
+      submitBtn: {
+        onClickHandler: action('Sequence stepper submitted'),
+      },
     },
   },
   render: (args) => <RenderStepper {...args} />,
@@ -866,7 +870,9 @@ export const Inline: Story = {
   args: {
     isInline: true,
     footerData: {
-      submitHandler: action('Inline stepper submitted'),
+      submitBtn: {
+        onClickHandler: action('Inline stepper submitted'),
+      },
     },
   },
   render: (args) => <RenderStepper {...args} />,
@@ -876,7 +882,9 @@ export const Vertical: Story = {
   args: {
     isVertical: true,
     footerData: {
-      submitHandler: action('Vertical stepper submitted'),
+      submitBtn: {
+        onClickHandler: action('Vertical stepper submitted'),
+      },
     },
   },
   render: (args) => <RenderStepper {...args} />,
@@ -886,7 +894,9 @@ export const DisableStepHeaderClick: Story = {
   args: {
     disableStepHeaderClick: true,
     footerData: {
-      submitHandler: action('Sequence stepper submitted'),
+      submitBtn: {
+        onClickHandler: action('Sequence stepper submitted'),
+      },
     },
   },
   render: (args) => <RenderStepper {...args} />,
@@ -895,7 +905,9 @@ export const DisableStepHeaderClick: Story = {
 export const PreventNextClick: Story = {
   args: {
     footerData: {
-      submitHandler: action('Prevent next step click stepper submitted'),
+      submitBtn: {
+        onClickHandler: action('Prevent next step click stepper submitted'),
+      },
     },
   },
   render: (args) => <PreventNextClickStepper {...args} />,
@@ -904,7 +916,9 @@ export const PreventNextClick: Story = {
 export const NavigateProgrammatically: Story = {
   args: {
     footerData: {
-      submitHandler: action('Navigate programmatically stepper submitted'),
+      submitBtn: {
+        onClickHandler: action('Navigate programmatically stepper submitted'),
+      },
     },
   },
   render: (args) => <NavigateProgrammaticallyStepper {...args} />,
@@ -914,7 +928,9 @@ export const NoConnector: Story = {
   args: {
     isStepConnector: false,
     footerData: {
-      submitHandler: action('No connector stepper submitted'),
+      submitBtn: {
+        onClickHandler: action('No connector stepper submitted'),
+      },
     },
   },
   render: (args) => <RenderStepper {...args} />,
@@ -924,7 +940,9 @@ export const CustomConnector: Story = {
   args: {
     customConnector: <ChevronRightIcon />,
     footerData: {
-      submitHandler: action('No connector stepper submitted'),
+      submitBtn: {
+        onClickHandler: action('Custom connector stepper submitted'),
+      },
     },
   },
   render: (args) => <RenderStepper {...args} />,
@@ -935,7 +953,9 @@ export const VerticalCustomConnector: Story = {
     customConnector: <ChevronDownIcon />,
     isVertical: true,
     footerData: {
-      submitHandler: action('No connector stepper submitted'),
+      submitBtn: {
+        onClickHandler: action('Vertical custom connector stepper submitted'),
+      },
     },
   },
   render: (args) => <RenderStepper {...args} />,
@@ -944,7 +964,9 @@ export const VerticalCustomConnector: Story = {
 export const WithIcons: Story = {
   args: {
     footerData: {
-      submitHandler: action('With icons stepper submitted'),
+      submitBtn: {
+        onClickHandler: action('With icons stepper submitted'),
+      },
     },
   },
   render: (args) => <StepperWithIcons {...args} />,
@@ -953,7 +975,9 @@ export const WithIcons: Story = {
 export const WithIconsAndNoCheckIconOnComplete: Story = {
   args: {
     footerData: {
-      submitHandler: action('With icons stepper submitted'),
+      submitBtn: {
+        onClickHandler: action('With icons and no check icon on complete stepper submitted'),
+      },
     },
   },
   render: (args) => <StepperWithIconsAndNoCheckIconOnComplete {...args} />,
@@ -969,7 +993,9 @@ export const CustomPallet: Story = {
       disabled: '#bdbdbd',
     },
     footerData: {
-      submitHandler: action('Custom pallet stepper submitted'),
+      submitBtn: {
+        onClickHandler: action('Custom pallet stepper submitted'),
+      },
     },
   },
   render: (args) => <RenderStepper {...args} />,
@@ -978,7 +1004,9 @@ export const CustomPallet: Story = {
 export const CustomStepFooter: Story = {
   args: {
     footerData: {
-      submitHandler: action('With icons stepper submitted'),
+      submitBtn: {
+        onClickHandler: action('Custom step footer stepper submitted'),
+      },
     },
   },
   render: (args) => <StepperWithCustomStepsFooter {...args} />,
@@ -987,13 +1015,19 @@ export const CustomStepFooter: Story = {
 export const CustomFooter: Story = {
   args: {
     footerData: {
-      prevBtnLabel: 'Prev',
-      prevBtnClassName: 'prev-button',
-      nextBtnLabel: 'Next',
-      nextBtnClassName: 'next-button',
-      submitBtnLabel: 'Send',
-      submitBtnClassName: 'submit-button',
-      submitHandler: action('Custom footer stepper submitted'),
+      prevBtn: {
+        label: 'Prev',
+        className: 'prev-button',
+      },
+      nextBtn: {
+        label: 'Next',
+        className: 'next-button',
+      },
+      submitBtn: {
+        label: 'Send',
+        className: 'submit-button',
+        onClickHandler: action('Custom footer stepper submitted'),
+      },
     },
   },
   render: (args) => <RenderStepper {...args} />,

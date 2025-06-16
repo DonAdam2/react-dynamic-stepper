@@ -4,13 +4,19 @@ import { StepperFooter } from '../stepperFooter/StepperFooter';
 import styles from './Stepper.module.scss';
 
 export interface FooterDataInterface {
-  prevBtnLabel?: string;
-  prevBtnClassName?: string;
-  nextBtnLabel?: string;
-  nextBtnClassName?: string;
-  submitBtnLabel?: string;
-  submitBtnClassName?: string;
-  submitHandler: () => void | Promise<void>;
+  prevBtn?: {
+    label?: string;
+    className?: string;
+  };
+  nextBtn?: {
+    label?: string;
+    className?: string;
+  };
+  submitBtn: {
+    label?: string;
+    className?: string;
+    onClickHandler: () => void | Promise<void>;
+  };
 }
 
 export interface PalletInterface {
@@ -31,6 +37,7 @@ export interface StepInterface {
   footer?: {
     nextButtonLabel?: string;
     prevButtonLabel?: string;
+    //prevent the next button click even if the step is completed
     isPreventNextClick?: boolean;
     onClickHandler?: () => void | Promise<void>;
   };

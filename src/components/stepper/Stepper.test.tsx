@@ -32,7 +32,9 @@ describe('Stepper', () => {
       <Stepper
         steps={steps}
         footerData={{
-          submitHandler: () => console.log('submitted'),
+          submitBtn: {
+            onClickHandler: () => console.log('submitted'),
+          },
         }}
         isRightToLeftLanguage
       />
