@@ -245,4 +245,267 @@ describe('Step', () => {
     fireEvent.click(indicator);
     expect(navigateToStepHandler).not.toHaveBeenCalled();
   });
+
+  it('keeps original indicator when isKeepIndicatorOnComplete is true and step is complete', () => {
+    const navigateToStepHandler = jest.fn(),
+      stepProps: StepInterface = {
+        indicator: '✓',
+        label: 'Completed Step',
+        navigateToStepHandler,
+        index: 0,
+        isActive: false,
+        isComplete: true,
+        isWarning: false,
+        isError: false,
+        isStepConnector: false,
+        isRightToLeftLanguage: false,
+        isKeepIndicatorOnComplete: true,
+      };
+
+    render(<Step {...stepProps} />);
+
+    const indicator = screen.getByText('✓');
+    const stepWrapper = screen.getByTestId('step-wrapper');
+
+    // Should show original indicator, not check mark
+    expect(indicator).toBeInTheDocument();
+    expect(screen.queryByTestId('check-mark')).not.toBeInTheDocument();
+    expect(stepWrapper).toHaveClass(styles['is-complete']);
+  });
+
+  it('applies is-active class when isActive is true', () => {
+    const navigateToStepHandler = jest.fn(),
+      stepProps: StepInterface = {
+        indicator: '1',
+        label: 'Active Step',
+        navigateToStepHandler,
+        index: 0,
+        isActive: true,
+        isComplete: false,
+        isWarning: false,
+        isError: false,
+        isStepConnector: false,
+        isRightToLeftLanguage: false,
+      };
+
+    render(<Step {...stepProps} />);
+
+    const stepWrapper = screen.getByTestId('step-wrapper');
+    expect(stepWrapper).toHaveClass(styles['is-active']);
+  });
+
+  it('does not apply is-active class when isActive is false', () => {
+    const navigateToStepHandler = jest.fn(),
+      stepProps: StepInterface = {
+        indicator: '1',
+        label: 'Inactive Step',
+        navigateToStepHandler,
+        index: 0,
+        isActive: false,
+        isComplete: false,
+        isWarning: false,
+        isError: false,
+        isStepConnector: false,
+        isRightToLeftLanguage: false,
+      };
+
+    render(<Step {...stepProps} />);
+
+    const stepWrapper = screen.getByTestId('step-wrapper');
+    expect(stepWrapper).not.toHaveClass(styles['is-active']);
+  });
+
+  it('prevents navigation when step is neither complete nor error', () => {
+    const navigateToStepHandler = jest.fn(),
+      stepProps: StepInterface = {
+        indicator: '2',
+        label: 'Pending Step',
+        navigateToStepHandler,
+        index: 1,
+        isActive: false,
+        isComplete: false,
+        isWarning: false,
+        isError: false,
+        isStepConnector: false,
+        isRightToLeftLanguage: false,
+      };
+
+    render(<Step {...stepProps} />);
+
+    const label = screen.getByText('Pending Step');
+    const indicator = screen.getByText('2');
+
+    // Clicking should not trigger navigation
+    fireEvent.click(label);
+    fireEvent.click(indicator);
+    expect(navigateToStepHandler).not.toHaveBeenCalled();
+  });
+
+  it('sets flex-basis to auto when isVertical, isStepConnector, and customConnector are all true', () => {
+    const navigateToStepHandler = jest.fn(),
+      customConnector = <div>Custom Connector</div>,
+      stepProps: StepInterface = {
+        indicator: '1',
+        label: 'Vertical Step',
+        navigateToStepHandler,
+        index: 0,
+        isActive: false,
+        isComplete: false,
+        isWarning: false,
+        isError: false,
+        isStepConnector: true,
+        isRightToLeftLanguage: false,
+        isVertical: true,
+        customConnector,
+      };
+
+    render(<Step {...stepProps} />);
+
+    const stepWrapper = screen.getByTestId('step-wrapper');
+    expect(stepWrapper).toHaveStyle({ flexBasis: 'auto' });
+  });
+
+  it('sets flex-basis to 100% when isVertical is false', () => {
+    const navigateToStepHandler = jest.fn(),
+      customConnector = <div>Custom Connector</div>,
+      stepProps: StepInterface = {
+        indicator: '1',
+        label: 'Horizontal Step',
+        navigateToStepHandler,
+        index: 0,
+        isActive: false,
+        isComplete: false,
+        isWarning: false,
+        isError: false,
+        isStepConnector: true,
+        isRightToLeftLanguage: false,
+        isVertical: false,
+        customConnector,
+      };
+
+    render(<Step {...stepProps} />);
+
+    const stepWrapper = screen.getByTestId('step-wrapper');
+    expect(stepWrapper).toHaveStyle({ flexBasis: '100%' });
+  });
+
+  it('sets flex-basis to 100% when customConnector is not provided', () => {
+    const navigateToStepHandler = jest.fn(),
+      stepProps: StepInterface = {
+        indicator: '1',
+        label: 'Step Without Custom Connector',
+        navigateToStepHandler,
+        index: 0,
+        isActive: false,
+        isComplete: false,
+        isWarning: false,
+        isError: false,
+        isStepConnector: true,
+        isRightToLeftLanguage: false,
+        isVertical: true,
+      };
+
+    render(<Step {...stepProps} />);
+
+    const stepWrapper = screen.getByTestId('step-wrapper');
+    expect(stepWrapper).toHaveStyle({ flexBasis: '100%' });
+  });
+
+  it('handles default pallet values when no pallet is provided', () => {
+    const navigateToStepHandler = jest.fn(),
+      stepProps: StepInterface = {
+        indicator: '1',
+        label: 'Step Without Pallet',
+        navigateToStepHandler,
+        index: 0,
+        isActive: false,
+        isComplete: false,
+        isWarning: false,
+        isError: false,
+        isStepConnector: false,
+        isRightToLeftLanguage: false,
+      };
+
+    render(<Step {...stepProps} />);
+
+    const stepWrapper = screen.getByTestId('step-wrapper');
+    expect(stepWrapper).toHaveStyle({
+      '--default-background-color': undefined,
+      '--warning-background-color': undefined,
+      '--danger-background-color': undefined,
+      '--success-background-color': undefined,
+      '--disabled-background-color': undefined,
+    });
+  });
+
+  it('allows navigation by clicking indicator when step is complete', () => {
+    const navigateToStepHandler = jest.fn(),
+      stepProps: StepInterface = {
+        indicator: '1',
+        label: 'Complete Step',
+        navigateToStepHandler,
+        index: 2,
+        isActive: false,
+        isComplete: true,
+        isWarning: false,
+        isError: false,
+        isStepConnector: false,
+        isRightToLeftLanguage: false,
+      };
+
+    render(<Step {...stepProps} />);
+
+    const checkMark = screen.getByTestId('check-mark');
+    fireEvent.click(checkMark);
+    expect(navigateToStepHandler).toHaveBeenCalledWith(2);
+  });
+
+  it('allows navigation by clicking indicator when step has error', () => {
+    const navigateToStepHandler = jest.fn(),
+      stepProps: StepInterface = {
+        indicator: '!',
+        label: 'Error Step',
+        navigateToStepHandler,
+        index: 3,
+        isActive: false,
+        isComplete: false,
+        isWarning: false,
+        isError: true,
+        isStepConnector: false,
+        isRightToLeftLanguage: false,
+      };
+
+    render(<Step {...stepProps} />);
+
+    const indicator = screen.getByText('!');
+    fireEvent.click(indicator);
+    expect(navigateToStepHandler).toHaveBeenCalledWith(3);
+  });
+
+  it('applies multiple state classes correctly', () => {
+    const navigateToStepHandler = jest.fn(),
+      stepProps: StepInterface = {
+        indicator: '1',
+        label: 'Multi-State Step',
+        navigateToStepHandler,
+        index: 0,
+        isActive: true,
+        isComplete: true,
+        isWarning: true,
+        isError: false,
+        isStepConnector: true,
+        isRightToLeftLanguage: true,
+        disableStepHeaderClick: true,
+      };
+
+    render(<Step {...stepProps} />);
+
+    const stepWrapper = screen.getByTestId('step-wrapper');
+    expect(stepWrapper).toHaveClass(styles['is-active']);
+    expect(stepWrapper).toHaveClass(styles['is-complete']);
+    expect(stepWrapper).toHaveClass(styles['is-warning']);
+    expect(stepWrapper).toHaveClass(styles['is-step-connector']);
+    expect(stepWrapper).toHaveClass(styles['is-right-to-left']);
+    expect(stepWrapper).toHaveClass(styles['is-disable-step-click']);
+  });
 });
