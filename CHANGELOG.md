@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/DonAdam2/react-dynamic-stepper/compare/v2.0.1...v3.0.0) (2025-06-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* **stepper.tsx:** update step footer interface
+* **stepper stepperfooter:** Change stepper footer interface
+* **stepper.tsx:** renamed NavigateToStepHandler type into StepperRef, renamed navigateToStep function
+into navigateToStepByIndex
+
+### Features
+
+* **stepper stepperfooter:** update Stepper footer interface ([b0dfd5a](https://github.com/DonAdam2/react-dynamic-stepper/commit/b0dfd5a3e7acc00277e9e0e0979189ba052187ca))
+* **stepper.tsx:** add customConnector ([7999f6e](https://github.com/DonAdam2/react-dynamic-stepper/commit/7999f6ef2ec194807f56b2f6e811059675e0a83e))
+* **stepper.tsx:** add disableStepHeaderClick ([e9a14f7](https://github.com/DonAdam2/react-dynamic-stepper/commit/e9a14f792ae2a30afd33b04573c28d10e96efe5b))
+* **stepper.tsx:** add navigateToStepById function ([2dd8840](https://github.com/DonAdam2/react-dynamic-stepper/commit/2dd88403abd6a69a5a16bf360ca0fba906fd5cf5))
+* **stepper.tsx:** rename navigateToStep into navigateToStepByIndex ([9224905](https://github.com/DonAdam2/react-dynamic-stepper/commit/9224905abc670ebdd36ee9f636eaa01bc4eb116d))
+* **stepper.tsx:** update step footer interface ([57b69ad](https://github.com/DonAdam2/react-dynamic-stepper/commit/57b69ad15766ac76aa610e3b5f44671e9cea256f))
+
 ### [2.0.1](https://github.com/DonAdam2/react-dynamic-stepper/compare/v2.0.0...v2.0.1) (2025-01-08)
 
 ## [2.0.0](https://github.com/DonAdam2/react-dynamic-stepper/compare/v1.3.0...v2.0.0) (2024-08-08)
