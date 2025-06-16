@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
-import { NavigateToStepHandler, Stepper, StepperInterface } from './Stepper';
+import { StepperRef, Stepper, StepperInterface } from './Stepper';
 import { RefAttributes, useRef, useState } from 'react';
 import { action } from 'storybook/actions';
 
@@ -11,7 +11,7 @@ const meta: Meta<typeof Stepper> = {
 export default meta;
 type Story = StoryObj<typeof Stepper>;
 
-function RenderStepper(props: StepperInterface & RefAttributes<NavigateToStepHandler>) {
+function RenderStepper(props: StepperInterface & RefAttributes<StepperRef>) {
   const [acceptFirstTerms, setAcceptFirstTerms] = useState({
       checked: false,
       touched: false,
@@ -26,7 +26,7 @@ function RenderStepper(props: StepperInterface & RefAttributes<NavigateToStepHan
     }),
     [isWarning, setIsWarning] = useState(false),
     [isSecondStepLoading, setIsSecondStepLoading] = useState(false),
-    stepperRef = useRef<NavigateToStepHandler>(null);
+    stepperRef = useRef<StepperRef>(null);
 
   const firstTermsHandler = () => {
     setAcceptFirstTerms((prev) => ({ checked: !prev.checked, touched: true }));
@@ -139,17 +139,17 @@ function RenderStepper(props: StepperInterface & RefAttributes<NavigateToStepHan
           marginInlineStart: 10,
         }}
         onClick={() => {
-          stepperRef.current?.navigateToStep(1);
+          stepperRef.current?.navigateToStepByIndex(1);
         }}
       >
-        Navigate to step 2 programmatically
+        navigate by index to step 2 programmatically
       </button>
       <Stepper {...props} ref={stepperRef} steps={steps} />
     </>
   );
 }
 
-function PreventNextClickStepper(props: StepperInterface & RefAttributes<NavigateToStepHandler>) {
+function PreventNextClickStepper(props: StepperInterface & RefAttributes<StepperRef>) {
   const [acceptFirstTerms, setAcceptFirstTerms] = useState({
       checked: false,
       touched: false,
@@ -290,9 +290,7 @@ function PreventNextClickStepper(props: StepperInterface & RefAttributes<Navigat
   return <Stepper {...props} steps={steps} />;
 }
 
-function StepperWithCustomStepsFooter(
-  props: StepperInterface & RefAttributes<NavigateToStepHandler>
-) {
+function StepperWithCustomStepsFooter(props: StepperInterface & RefAttributes<StepperRef>) {
   const [acceptFirstTerms, setAcceptFirstTerms] = useState({
       checked: false,
       touched: false,
@@ -307,7 +305,7 @@ function StepperWithCustomStepsFooter(
     }),
     [isWarning, setIsWarning] = useState(false),
     [isSecondStepLoading, setIsSecondStepLoading] = useState(false),
-    stepperRef = useRef<NavigateToStepHandler>(null);
+    stepperRef = useRef<StepperRef>(null);
 
   const firstTermsHandler = () => {
     setAcceptFirstTerms((prev) => ({ checked: !prev.checked, touched: true }));
@@ -425,10 +423,10 @@ function StepperWithCustomStepsFooter(
           marginInlineStart: 10,
         }}
         onClick={() => {
-          stepperRef.current?.navigateToStep(1);
+          stepperRef.current?.navigateToStepByIndex(1);
         }}
       >
-        Navigate to step 2 programmatically
+        navigate by index to step 2 programmatically
       </button>
       <Stepper {...props} ref={stepperRef} steps={steps} />
     </>
@@ -492,7 +490,7 @@ const PrepareDocumentsIcon = ({ className = '' }) => (
   </svg>
 );
 
-function StepperWithIcons(props: StepperInterface & RefAttributes<NavigateToStepHandler>) {
+function StepperWithIcons(props: StepperInterface & RefAttributes<StepperRef>) {
   const [acceptFirstTerms, setAcceptFirstTerms] = useState({
       checked: false,
       touched: false,
@@ -585,7 +583,7 @@ function StepperWithIcons(props: StepperInterface & RefAttributes<NavigateToStep
 }
 
 function StepperWithIconsAndNoCheckIconOnComplete(
-  props: StepperInterface & RefAttributes<NavigateToStepHandler>
+  props: StepperInterface & RefAttributes<StepperRef>
 ) {
   const [acceptFirstTerms, setAcceptFirstTerms] = useState({
       checked: false,

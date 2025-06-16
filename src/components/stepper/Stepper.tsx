@@ -53,11 +53,11 @@ export interface StepperInterface {
   customConnector?: ReactNode;
 }
 
-export type NavigateToStepHandler = {
-  navigateToStep: (index: number) => void;
+export type StepperRef = {
+  navigateToStepByIndex: (index: number) => void;
 };
 
-export const Stepper = forwardRef<NavigateToStepHandler, StepperInterface>(
+export const Stepper = forwardRef<StepperRef, StepperInterface>(
   (
     {
       isRightToLeftLanguage = false,
@@ -110,7 +110,7 @@ export const Stepper = forwardRef<NavigateToStepHandler, StepperInterface>(
     useImperativeHandle(
       ref,
       () => ({
-        navigateToStep: navigateToStepHandler,
+        navigateToStepByIndex: navigateToStepHandler,
       }),
       [navigateToStepHandler]
     );

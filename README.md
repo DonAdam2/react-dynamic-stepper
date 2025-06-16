@@ -109,19 +109,19 @@ const App = () => {
 
 ## Stepper props:
 
-| Prop                         | Type                           | Default | Required | Description                                                                                          |
-|------------------------------|--------------------------------|---------| ---       |------------------------------------------------------------------------------------------------------|
-| isRightToLeftLanguage        | Boolean                        | `false` | No | If true, sets the direction of the stepper to **rtl**                                                |
-| isVertical                   | Boolean                        | `false` | No | If true, sets the orientation of the stepper to vertical                                             |
-| isInline                     | Boolean                        | `false` | No | If true, sets the header display of the stepper to inline                                            |
-| isSequenceStepper            | Boolean                        | `false` | No | If true, sets the stepper to sequence mode (forces the user to complete steps in sequence)           |
-| isStepConnector              | Boolean                        | `true`  | No | If false, removes the step connector                                                                 |
-| customConnector              | ReactNode                      | `null`  | No | Custom connector element to display between steps (only shows when isStepConnector is true)          |
-| disableStepHeaderClick       | Boolean                        | `false` | No | If true, disables clicking on step headers (indicator and label) to navigate directly to completed or error steps |
-| [ref](#features-and-methods) | `useRef<NavigateToStepHandler>`                        | `null`  | No | It exposes `navigateToStep` function, that can programmatically navigate the user to a specific step |
-| steps                        | [StepInterface[]](#StepInterface) | -       | Yes | Array of steps                                                                                       |
-| footerData                   | [FooterDataInterface[]](#FooterDataInterface)            | -       | Yes | Footer data                                                                                          |
-| pallet                       | [PalletInterface[]](#PalletInterface)                | -       | No | Pallet for custom color codes                                                                        |
+| Prop                         | Type                           | Default | Required | Description                                                                                                                           |
+|------------------------------|--------------------------------|---------| ---       |---------------------------------------------------------------------------------------------------------------------------------------|
+| isRightToLeftLanguage        | Boolean                        | `false` | No | If true, sets the direction of the stepper to **rtl**                                                                                 |
+| isVertical                   | Boolean                        | `false` | No | If true, sets the orientation of the stepper to vertical                                                                              |
+| isInline                     | Boolean                        | `false` | No | If true, sets the header display of the stepper to inline                                                                             |
+| isSequenceStepper            | Boolean                        | `false` | No | If true, sets the stepper to sequence mode (forces the user to complete steps in sequence)                                            |
+| isStepConnector              | Boolean                        | `true`  | No | If false, removes the step connector                                                                                                  |
+| customConnector              | ReactNode                      | `null`  | No | Custom connector element to display between steps (only shows when isStepConnector is true)                                           |
+| disableStepHeaderClick       | Boolean                        | `false` | No | If true, disables clicking on step headers (indicator and label) to navigate directly to completed or error steps                     |
+| [ref](#features-and-methods) | `useRef<StepperRef>`                        | `null`  | No | It exposes `navigateToStepByIndex` and `navigateToStepById` functions, that can programmatically navigate the user to a specific step |
+| steps                        | [StepInterface[]](#StepInterface) | -       | Yes | Array of steps                                                                                                                        |
+| footerData                   | [FooterDataInterface[]](#FooterDataInterface)            | -       | Yes | Footer data                                                                                                                           |
+| pallet                       | [PalletInterface[]](#PalletInterface)                | -       | No | Pallet for custom color codes                                                                                                         |
 
 <p dir="rtl"><a href="#table-of-contents">Back to top</a></p>
 
@@ -194,10 +194,10 @@ const App = () => {
     <>
       <button
         onClick={() => {
-          stepperRef.current?.navigateToStep(1);
+          stepperRef.current?.navigateToStepByIndex(1);
         }}
       >
-        Navigate to step 2 programmatically
+        navigate by index to step 2 programmatically
       </button>
       <Stepper
         ref={stepperRef}
@@ -213,19 +213,19 @@ const App = () => {
 
 ```typescript jsx
 import { useRef } from 'react';
-import { Stepper, NavigateToStepHandler } from 'react-dynamic-stepper';
+import { Stepper, StepperRef } from 'react-dynamic-stepper';
 
 const App = () => {
-  const stepperRef = useRef<NavigateToStepHandler>(null);
+  const stepperRef = useRef<StepperRef>(null);
 
   return (
     <>
       <button
         onClick={() => {
-          stepperRef.current?.navigateToStep(1);
+          stepperRef.current?.navigateToStepByIndex(1);
         }}
       >
-        Navigate to step 2 programmatically
+        navigate by index to step 2 programmatically
       </button>
       <Stepper
         ref={stepperRef}
