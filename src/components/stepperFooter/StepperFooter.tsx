@@ -32,9 +32,9 @@ export const StepperFooter: FC<StepperFooterInterface> = ({
   }
 
   const submitCurrentStep = async () => {
-    if (!steps[currentTabIndex].footer?.isPreventNextClick) {
+    if (!steps[currentTabIndex].footer?.nextBtn?.isPreventNextClick) {
       try {
-        await steps[currentTabIndex].footer?.onClickHandler?.();
+        await steps[currentTabIndex].footer?.nextBtn?.onClickHandler?.();
         nextStepHandler();
       } catch (err) {
         console.log(err);
@@ -44,9 +44,9 @@ export const StepperFooter: FC<StepperFooterInterface> = ({
   };
 
   const submitHandler = async () => {
-    if (!steps[currentTabIndex].footer?.isPreventNextClick) {
+    if (!steps[currentTabIndex].footer?.nextBtn?.isPreventNextClick) {
       try {
-        await footerData.submitHandler();
+        await footerData.submitBtn.onClickHandler();
       } catch (err) {
         console.log(err);
         throw err;
@@ -61,28 +61,26 @@ export const StepperFooter: FC<StepperFooterInterface> = ({
     >
       {isPrevBtn && (
         <button
-          className={`${
-            footerData.prevBtnClassName ? footerData.prevBtnClassName : styles['stepper-footer-btn']
-          }`}
+          className={`${footerData?.prevBtn?.className ?? styles['stepper-footer-btn']}`}
           onClick={previousStepHandler}
         >
-          {footerData.prevBtnLabel ??
-            steps[currentTabIndex]?.footer?.prevButtonLabel ??
+          {footerData?.prevBtn?.label ??
+            steps[currentTabIndex]?.footer?.prevBtn?.label ??
             `Back to ${steps[currentTabIndex - 1].header.label}`}
         </button>
       )}
       <button
         className={`${
-          !isLastStep && footerData.nextBtnClassName
-            ? footerData.nextBtnClassName
-            : isLastStep && footerData.submitBtnClassName
-              ? footerData.submitBtnClassName
+          !isLastStep && footerData?.nextBtn?.className
+            ? footerData.nextBtn.className
+            : isLastStep && footerData?.submitBtn?.className
+              ? footerData.submitBtn.className
               : classes.join(' ')
         }`}
         onClick={
           isLastStep
             ? submitHandler
-            : steps[currentTabIndex].footer?.onClickHandler
+            : steps[currentTabIndex].footer?.nextBtn?.onClickHandler
               ? submitCurrentStep
               : nextStepHandler
         }
@@ -93,9 +91,9 @@ export const StepperFooter: FC<StepperFooterInterface> = ({
         style={{ '--success-background-color': successColor } as CSSProperties}
       >
         {isLastStep
-          ? (footerData.submitBtnLabel ?? 'Submit')
-          : (footerData.nextBtnLabel ??
-            steps[currentTabIndex]?.footer?.nextButtonLabel ??
+          ? (footerData?.submitBtn?.label ?? 'Submit')
+          : (footerData?.nextBtn?.label ??
+            steps[currentTabIndex]?.footer?.nextBtn?.label ??
             `Continue to ${steps[currentTabIndex + 1].header.label}`)}
       </button>
     </div>

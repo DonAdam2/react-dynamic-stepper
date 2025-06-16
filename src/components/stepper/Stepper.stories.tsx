@@ -1,7 +1,7 @@
-import { Meta, StoryObj } from '@storybook/react';
-import { NavigateToStepHandler, Stepper, StepperInterface } from './Stepper';
+import { Meta, StoryObj } from '@storybook/react-vite';
+import { StepperRef, Stepper, StepperInterface, StepInterface } from './Stepper';
 import { RefAttributes, useRef, useState } from 'react';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 
 //👇 This default export determines where your story goes in the story list
 const meta: Meta<typeof Stepper> = {
@@ -11,7 +11,7 @@ const meta: Meta<typeof Stepper> = {
 export default meta;
 type Story = StoryObj<typeof Stepper>;
 
-function RenderStepper(props: StepperInterface & RefAttributes<NavigateToStepHandler>) {
+function RenderStepper(props: StepperInterface & RefAttributes<StepperRef>) {
   const [acceptFirstTerms, setAcceptFirstTerms] = useState({
       checked: false,
       touched: false,
@@ -25,8 +25,7 @@ function RenderStepper(props: StepperInterface & RefAttributes<NavigateToStepHan
       touched: false,
     }),
     [isWarning, setIsWarning] = useState(false),
-    [isSecondStepLoading, setIsSecondStepLoading] = useState(false),
-    stepperRef = useRef<NavigateToStepHandler>(null);
+    [isSecondStepLoading, setIsSecondStepLoading] = useState(false);
 
   const firstTermsHandler = () => {
     setAcceptFirstTerms((prev) => ({ checked: !prev.checked, touched: true }));
@@ -57,7 +56,7 @@ function RenderStepper(props: StepperInterface & RefAttributes<NavigateToStepHan
     console.log('second step clicked');
   };
 
-  const steps = [
+  const steps: StepInterface[] = [
     {
       header: {
         label: 'Step 1',
@@ -98,13 +97,137 @@ function RenderStepper(props: StepperInterface & RefAttributes<NavigateToStepHan
         </div>
       ),
       footer: {
-        onClickHandler: () => secondStepAsyncFunc(),
+        nextBtn: {
+          onClickHandler: () => secondStepAsyncFunc(),
+        },
       },
       isLoading: isSecondStepLoading,
       isError: !acceptSecondTerms.checked && acceptSecondTerms.touched,
       isComplete: acceptSecondTerms.checked,
     },
     {
+      header: {
+        label: 'Step 3',
+      },
+      content: (
+        <div>
+          <label>
+            <input
+              type="checkbox"
+              checked={acceptThirdTerms.checked}
+              onChange={thirdTermsHandler}
+            />{' '}
+            Accept third terms and conditions
+          </label>
+        </div>
+      ),
+      isError: !acceptThirdTerms.checked && acceptThirdTerms.touched,
+      isComplete: acceptThirdTerms.checked,
+    },
+  ];
+
+  return <Stepper {...props} steps={steps} />;
+}
+
+function NavigateProgrammaticallyStepper(props: StepperInterface & RefAttributes<StepperRef>) {
+  const [acceptFirstTerms, setAcceptFirstTerms] = useState({
+      checked: false,
+      touched: false,
+    }),
+    [acceptSecondTerms, setAcceptSecondTerms] = useState({
+      checked: false,
+      touched: false,
+    }),
+    [acceptThirdTerms, setAcceptThirdTerms] = useState({
+      checked: false,
+      touched: false,
+    }),
+    [isWarning, setIsWarning] = useState(false),
+    [isSecondStepLoading, setIsSecondStepLoading] = useState(false),
+    stepperRef = useRef<StepperRef>(null);
+
+  const firstTermsHandler = () => {
+    setAcceptFirstTerms((prev) => ({ checked: !prev.checked, touched: true }));
+  };
+
+  const secondTermsHandler = () => {
+    setAcceptSecondTerms((prev) => ({ checked: !prev.checked, touched: true }));
+  };
+
+  const thirdTermsHandler = () => {
+    setAcceptThirdTerms((prev) => ({ checked: !prev.checked, touched: true }));
+  };
+
+  const isWarningHandler = () => {
+    setIsWarning((prev) => !prev);
+  };
+
+  //for demo purposes only
+  const timeout = (ms: number) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  };
+
+  const secondStepAsyncFunc = async () => {
+    //it can be an API call
+    setIsSecondStepLoading(true);
+    await timeout(3000);
+    setIsSecondStepLoading(false);
+    console.log('second step clicked');
+  };
+
+  const steps: StepInterface[] = [
+    {
+      id: 'step-1',
+      header: {
+        label: 'Step 1',
+      },
+      content: (
+        <div>
+          <label style={{ display: 'block', marginBottom: 5 }}>
+            <input
+              type="checkbox"
+              checked={acceptFirstTerms.checked}
+              onChange={firstTermsHandler}
+            />{' '}
+            Accept first terms and conditions
+          </label>
+          <label style={{ display: 'block' }}>
+            <input type="checkbox" checked={isWarning} onChange={isWarningHandler} /> Is warning
+          </label>
+        </div>
+      ),
+      isError: !acceptFirstTerms.checked && acceptFirstTerms.touched,
+      isWarning: isWarning,
+      isComplete: acceptFirstTerms.checked,
+    },
+    {
+      id: 'step-2',
+      header: {
+        label: 'Step 2',
+      },
+      content: (
+        <div>
+          <label>
+            <input
+              type="checkbox"
+              checked={acceptSecondTerms.checked}
+              onChange={secondTermsHandler}
+            />{' '}
+            Accept second terms and conditions
+          </label>
+        </div>
+      ),
+      footer: {
+        nextBtn: {
+          onClickHandler: () => secondStepAsyncFunc(),
+        },
+      },
+      isLoading: isSecondStepLoading,
+      isError: !acceptSecondTerms.checked && acceptSecondTerms.touched,
+      isComplete: acceptSecondTerms.checked,
+    },
+    {
+      id: 'step-3',
       header: {
         label: 'Step 3',
       },
@@ -139,17 +262,34 @@ function RenderStepper(props: StepperInterface & RefAttributes<NavigateToStepHan
           marginInlineStart: 10,
         }}
         onClick={() => {
-          stepperRef.current?.navigateToStep(1);
+          stepperRef.current?.navigateToStepByIndex(1);
         }}
       >
-        Navigate to step 2 programmatically
+        Navigate to step 2 by index
+      </button>
+      <button
+        style={{
+          color: '#ffffff',
+          backgroundColor: '#1976d2',
+          padding: '6px 16px',
+          fontSize: '0.875rem',
+          border: 'none',
+          outline: 'none',
+          borderRadius: 4,
+          marginInlineStart: 10,
+        }}
+        onClick={() => {
+          stepperRef.current?.navigateToStepById('step-3');
+        }}
+      >
+        Navigate to step 3 by ID
       </button>
       <Stepper {...props} ref={stepperRef} steps={steps} />
     </>
   );
 }
 
-function PreventNextClickStepper(props: StepperInterface & RefAttributes<NavigateToStepHandler>) {
+function PreventNextClickStepper(props: StepperInterface & RefAttributes<StepperRef>) {
   const [acceptFirstTerms, setAcceptFirstTerms] = useState({
       checked: false,
       touched: false,
@@ -195,13 +335,15 @@ function PreventNextClickStepper(props: StepperInterface & RefAttributes<Navigat
     console.log('second step clicked');
   };
 
-  const steps = [
+  const steps: StepInterface[] = [
     {
       header: {
         label: 'Step 1',
       },
       footer: {
-        isPreventNextClick,
+        nextBtn: {
+          isPreventNextClick,
+        },
       },
       content: (
         <div>
@@ -260,7 +402,9 @@ function PreventNextClickStepper(props: StepperInterface & RefAttributes<Navigat
         </div>
       ),
       footer: {
-        onClickHandler: () => secondStepAsyncFunc(),
+        nextBtn: {
+          onClickHandler: () => secondStepAsyncFunc(),
+        },
       },
       isLoading: isSecondStepLoading,
       isError: !acceptSecondTerms.checked && acceptSecondTerms.touched,
@@ -290,9 +434,7 @@ function PreventNextClickStepper(props: StepperInterface & RefAttributes<Navigat
   return <Stepper {...props} steps={steps} />;
 }
 
-function StepperWithCustomStepsFooter(
-  props: StepperInterface & RefAttributes<NavigateToStepHandler>
-) {
+function StepperWithCustomStepsFooter(props: StepperInterface & RefAttributes<StepperRef>) {
   const [acceptFirstTerms, setAcceptFirstTerms] = useState({
       checked: false,
       touched: false,
@@ -306,8 +448,7 @@ function StepperWithCustomStepsFooter(
       touched: false,
     }),
     [isWarning, setIsWarning] = useState(false),
-    [isSecondStepLoading, setIsSecondStepLoading] = useState(false),
-    stepperRef = useRef<NavigateToStepHandler>(null);
+    [isSecondStepLoading, setIsSecondStepLoading] = useState(false);
 
   const firstTermsHandler = () => {
     setAcceptFirstTerms((prev) => ({ checked: !prev.checked, touched: true }));
@@ -338,13 +479,15 @@ function StepperWithCustomStepsFooter(
     console.log('second step clicked');
   };
 
-  const steps = [
+  const steps: StepInterface[] = [
     {
       header: {
         label: 'Step 1',
       },
       footer: {
-        nextButtonLabel: 'Go to step 2',
+        nextBtn: {
+          label: 'Go to step 2',
+        },
       },
       content: (
         <div>
@@ -370,9 +513,13 @@ function StepperWithCustomStepsFooter(
         label: 'Step 2',
       },
       footer: {
-        nextButtonLabel: 'Go to step 3',
-        prevButtonLabel: 'Go to step 1',
-        onClickHandler: () => secondStepAsyncFunc(),
+        nextBtn: {
+          label: 'Go to step 3',
+          onClickHandler: () => secondStepAsyncFunc(),
+        },
+        prevBtn: {
+          label: 'Go to step 1',
+        },
       },
       content: (
         <div>
@@ -411,28 +558,7 @@ function StepperWithCustomStepsFooter(
     },
   ];
 
-  return (
-    <>
-      <button
-        style={{
-          color: '#ffffff',
-          backgroundColor: '#1976d2',
-          padding: '6px 16px',
-          fontSize: '0.875rem',
-          border: 'none',
-          outline: 'none',
-          borderRadius: 4,
-          marginInlineStart: 10,
-        }}
-        onClick={() => {
-          stepperRef.current?.navigateToStep(1);
-        }}
-      >
-        Navigate to step 2 programmatically
-      </button>
-      <Stepper {...props} ref={stepperRef} steps={steps} />
-    </>
-  );
+  return <Stepper {...props} steps={steps} />;
 }
 
 const AddDocumentsIcon = ({ className = '' }) => (
@@ -492,7 +618,7 @@ const PrepareDocumentsIcon = ({ className = '' }) => (
   </svg>
 );
 
-function StepperWithIcons(props: StepperInterface & RefAttributes<NavigateToStepHandler>) {
+function StepperWithIcons(props: StepperInterface & RefAttributes<StepperRef>) {
   const [acceptFirstTerms, setAcceptFirstTerms] = useState({
       checked: false,
       touched: false,
@@ -585,7 +711,7 @@ function StepperWithIcons(props: StepperInterface & RefAttributes<NavigateToStep
 }
 
 function StepperWithIconsAndNoCheckIconOnComplete(
-  props: StepperInterface & RefAttributes<NavigateToStepHandler>
+  props: StepperInterface & RefAttributes<StepperRef>
 ) {
   const [acceptFirstTerms, setAcceptFirstTerms] = useState({
       checked: false,
@@ -681,20 +807,74 @@ function StepperWithIconsAndNoCheckIconOnComplete(
   return <Stepper {...props} steps={stepsWithIcons} />;
 }
 
-export const Sequence: Story = {
+const ChevronRightIcon = () => (
+  <svg width="7" height="14" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M0.999999 1L8 8L1 15"
+      stroke="#64748B"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <defs>
+      <linearGradient
+        id="paint0_linear_1540_1997"
+        x1="4.5"
+        y1="15"
+        x2="4.5"
+        y2="1"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="var(--theme-primary-light)" />
+        <stop offset="1" stopColor="var(--theme-primary-dark)" />
+      </linearGradient>
+    </defs>
+  </svg>
+);
+
+const ChevronDownIcon = () => (
+  <svg width="14" height="7" viewBox="0 0 16 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M15 1L8 8L1 1"
+      stroke="#64748B"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <defs>
+      <linearGradient
+        id="paint0_linear_1631_1851"
+        x1="1"
+        y1="4.5"
+        x2="15"
+        y2="4.5"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="var(--theme-primary-light)" />
+        <stop offset="1" stopColor="var(--theme-primary-dark)" />
+      </linearGradient>
+    </defs>
+  </svg>
+);
+
+export const Default: Story = {
   args: {
-    isSequenceStepper: true,
     footerData: {
-      submitHandler: action('Sequence stepper submitted'),
+      submitBtn: {
+        onClickHandler: action('Default stepper submitted'),
+      },
     },
   },
   render: (args) => <RenderStepper {...args} />,
 };
 
-export const Default: Story = {
+export const Sequence: Story = {
   args: {
+    isSequenceStepper: true,
     footerData: {
-      submitHandler: action('Default stepper submitted'),
+      submitBtn: {
+        onClickHandler: action('Sequence stepper submitted'),
+      },
     },
   },
   render: (args) => <RenderStepper {...args} />,
@@ -704,7 +884,9 @@ export const Inline: Story = {
   args: {
     isInline: true,
     footerData: {
-      submitHandler: action('Inline stepper submitted'),
+      submitBtn: {
+        onClickHandler: action('Inline stepper submitted'),
+      },
     },
   },
   render: (args) => <RenderStepper {...args} />,
@@ -714,7 +896,21 @@ export const Vertical: Story = {
   args: {
     isVertical: true,
     footerData: {
-      submitHandler: action('Vertical stepper submitted'),
+      submitBtn: {
+        onClickHandler: action('Vertical stepper submitted'),
+      },
+    },
+  },
+  render: (args) => <RenderStepper {...args} />,
+};
+
+export const DisableStepHeaderClick: Story = {
+  args: {
+    disableStepHeaderClick: true,
+    footerData: {
+      submitBtn: {
+        onClickHandler: action('Sequence stepper submitted'),
+      },
     },
   },
   render: (args) => <RenderStepper {...args} />,
@@ -723,17 +919,57 @@ export const Vertical: Story = {
 export const PreventNextClick: Story = {
   args: {
     footerData: {
-      submitHandler: action('Prevent next step click stepper submitted'),
+      submitBtn: {
+        onClickHandler: action('Prevent next step click stepper submitted'),
+      },
     },
   },
   render: (args) => <PreventNextClickStepper {...args} />,
+};
+
+export const NavigateProgrammatically: Story = {
+  args: {
+    footerData: {
+      submitBtn: {
+        onClickHandler: action('Navigate programmatically stepper submitted'),
+      },
+    },
+  },
+  render: (args) => <NavigateProgrammaticallyStepper {...args} />,
 };
 
 export const NoConnector: Story = {
   args: {
     isStepConnector: false,
     footerData: {
-      submitHandler: action('No connector stepper submitted'),
+      submitBtn: {
+        onClickHandler: action('No connector stepper submitted'),
+      },
+    },
+  },
+  render: (args) => <RenderStepper {...args} />,
+};
+
+export const CustomConnector: Story = {
+  args: {
+    customConnector: <ChevronRightIcon />,
+    footerData: {
+      submitBtn: {
+        onClickHandler: action('Custom connector stepper submitted'),
+      },
+    },
+  },
+  render: (args) => <RenderStepper {...args} />,
+};
+
+export const VerticalCustomConnector: Story = {
+  args: {
+    customConnector: <ChevronDownIcon />,
+    isVertical: true,
+    footerData: {
+      submitBtn: {
+        onClickHandler: action('Vertical custom connector stepper submitted'),
+      },
     },
   },
   render: (args) => <RenderStepper {...args} />,
@@ -742,7 +978,9 @@ export const NoConnector: Story = {
 export const WithIcons: Story = {
   args: {
     footerData: {
-      submitHandler: action('With icons stepper submitted'),
+      submitBtn: {
+        onClickHandler: action('With icons stepper submitted'),
+      },
     },
   },
   render: (args) => <StepperWithIcons {...args} />,
@@ -751,7 +989,9 @@ export const WithIcons: Story = {
 export const WithIconsAndNoCheckIconOnComplete: Story = {
   args: {
     footerData: {
-      submitHandler: action('With icons stepper submitted'),
+      submitBtn: {
+        onClickHandler: action('With icons and no check icon on complete stepper submitted'),
+      },
     },
   },
   render: (args) => <StepperWithIconsAndNoCheckIconOnComplete {...args} />,
@@ -767,7 +1007,9 @@ export const CustomPallet: Story = {
       disabled: '#bdbdbd',
     },
     footerData: {
-      submitHandler: action('Custom pallet stepper submitted'),
+      submitBtn: {
+        onClickHandler: action('Custom pallet stepper submitted'),
+      },
     },
   },
   render: (args) => <RenderStepper {...args} />,
@@ -776,7 +1018,9 @@ export const CustomPallet: Story = {
 export const CustomStepFooter: Story = {
   args: {
     footerData: {
-      submitHandler: action('With icons stepper submitted'),
+      submitBtn: {
+        onClickHandler: action('Custom step footer stepper submitted'),
+      },
     },
   },
   render: (args) => <StepperWithCustomStepsFooter {...args} />,
@@ -785,13 +1029,19 @@ export const CustomStepFooter: Story = {
 export const CustomFooter: Story = {
   args: {
     footerData: {
-      prevBtnLabel: 'Prev',
-      prevBtnClassName: 'prev-button',
-      nextBtnLabel: 'Next',
-      nextBtnClassName: 'next-button',
-      submitBtnLabel: 'Send',
-      submitBtnClassName: 'submit-button',
-      submitHandler: action('Custom footer stepper submitted'),
+      prevBtn: {
+        label: 'Prev',
+        className: 'prev-button',
+      },
+      nextBtn: {
+        label: 'Next',
+        className: 'next-button',
+      },
+      submitBtn: {
+        label: 'Send',
+        className: 'submit-button',
+        onClickHandler: action('Custom footer stepper submitted'),
+      },
     },
   },
   render: (args) => <RenderStepper {...args} />,

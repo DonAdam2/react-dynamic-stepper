@@ -1,4 +1,3 @@
-
 [![Storybook][badge_storybook]][package_link]
 [![Npm version][badge_npm-version]][package_link]
 [![Npm downloads][badge_npm-downloads]][package_link]
@@ -75,7 +74,11 @@ const App = () => {
               label: 'Step 2',
             },
             content: <div>Second step content</div>,
-            onClickHandler: () => console.log('clicked on second step next button'),
+            footer: {
+              nextBtn: {
+                onClickHandler: () => console.log('clicked on second step next button'),
+              },
+            },
             isLoading: false,
             isError: false,
             isComplete: true,
@@ -98,7 +101,9 @@ const App = () => {
     <Stepper
       steps={steps}
       footerData={{
-        submitHandler: submitStepper,
+        submitBtn: {
+          onClickHandler: submitStepper,
+        },
       }}
     />
   );
@@ -109,17 +114,19 @@ const App = () => {
 
 ## Stepper props:
 
-| Prop                         | Type                           | Default | Required | Description                                                                                          |
-|------------------------------|--------------------------------|---------| ---       |------------------------------------------------------------------------------------------------------|
-| isRightToLeftLanguage        | Boolean                        | `false` | No | If true, sets the direction of the stepper to **rtl**                                                |
-| isVertical                   | Boolean                        | `false` | No | If true, sets the orientation of the stepper to vertical                                             |
-| isInline                     | Boolean                        | `false` | No | If true, sets the header display of the stepper to inline                                            |
-| isSequenceStepper            | Boolean                        | `false` | No | If true, sets the stepper to sequence mode (forces the user to complete steps in sequence)           |
-| isStepConnector              | Boolean                        | `true`  | No | If false, removes the step connector                                                                 |
-| [ref](#features-and-methods) | `useRef<NavigateToStepHandler>`                        | `null`  | No | It exposes `navigateToStep` function, that can programmatically navigate the user to a specific step |
-| steps                        | [StepInterface[]](#StepInterface) | -       | Yes | Array of steps                                                                                       |
-| footerData                   | [FooterDataInterface[]](#FooterDataInterface)            | -       | Yes | Footer data                                                                                          |
-| pallet                       | [PalletInterface[]](#PalletInterface)                | -       | No | Pallet for custom color codes                                                                        |
+| Prop                         | Type                           | Default | Required | Description                                                                                                                           |
+|------------------------------|--------------------------------|---------| ---       |---------------------------------------------------------------------------------------------------------------------------------------|
+| isRightToLeftLanguage        | Boolean                        | `false` | No | If true, sets the direction of the stepper to **rtl**                                                                                 |
+| isVertical                   | Boolean                        | `false` | No | If true, sets the orientation of the stepper to vertical                                                                              |
+| isInline                     | Boolean                        | `false` | No | If true, sets the header display of the stepper to inline                                                                             |
+| isSequenceStepper            | Boolean                        | `false` | No | If true, sets the stepper to sequence mode (forces the user to complete steps in sequence)                                            |
+| isStepConnector              | Boolean                        | `true`  | No | If false, removes the step connector                                                                                                  |
+| customConnector              | ReactNode                      | `null`  | No | Custom connector element to display between steps (only shows when isStepConnector is true)                                           |
+| disableStepHeaderClick       | Boolean                        | `false` | No | If true, disables clicking on step headers (indicator and label) to navigate directly to completed or error steps                     |
+| [ref](#features-and-methods) | `useRef<StepperRef>`                        | `null`  | No | It exposes `navigateToStepByIndex` and `navigateToStepById` functions, that can programmatically navigate the user to a specific step |
+| steps                        | [StepInterface[]](#StepInterface) | -       | Yes | Array of steps                                                                                                                        |
+| footerData                   | [FooterDataInterface[]](#FooterDataInterface)            | -       | Yes | Footer data                                                                                                                           |
+| pallet                       | [PalletInterface[]](#PalletInterface)                | -       | No | Pallet for custom color codes                                                                                                         |
 
 <p dir="rtl"><a href="#table-of-contents">Back to top</a></p>
 
@@ -127,13 +134,16 @@ const App = () => {
 
 | Prop                                       | Type                                            | Default                                    | Required | Description                                                                                                              |
 |--------------------------------------------|-------------------------------------------------|--------------------------------------------|----------|--------------------------------------------------------------------------------------------------------------------------|
+ | id                                         | String                                          | -                                          | No       | Unique identifier for the step (required when using navigateToStepById)                                                 |
 | header.label                               | String                                          | -                                          | Yes      | The label to display on the step header                                                                                  |
 | header.indicator                           | ReactNode                                       | Step number                                | No       | Custom indicator for the step                                                                                            |
-| header.indicator.isKeepIndicatorOnComplete | Boolean                | `false`                                    | No       | Keep header indicator when step is completed                                                                             |
-| footer.nextButtonLabel                     | String                                     | `Continue to ${nextStepLabel}` or `Submit` | No | Set next button label of the current step                                                                                |
-| footer.prevButtonLabel                     | String                                     | `Back to ${prevStepLabel}` | No | Set prev button label of the current step                                                                                |
-| footer.isPreventNextClick                  | Boolean                                 | `false` | No | If true, clicking the ‘Next’ or ‘Submit’ button for the current step will not trigger any action unless its set to false |
-| footer.onClickHandler                      | Function: `() => void` or `() => Promise<void>` | -                                          | No       | Invoked when the next button of the current step is clicked                                                              |
+| header.isKeepIndicatorOnComplete | Boolean                | `false`                                    | No       | Keep header indicator when step is completed                                                                             |
+| footer.nextBtn.label                       | String                                     | `Continue to ${nextStepLabel}` or `Submit` | No | Set next button label of the current step                                                                                |
+| footer.nextBtn.className                   | String                                     | `undefined` | No | CSS classname(s) to be applied to next button of the current step                                                                                |
+| footer.nextBtn.isPreventNextClick          | Boolean                                 | `false` | No | If true, clicking the 'Next' or 'Submit' button for the current step will not trigger any action unless its set to false |
+| footer.nextBtn.onClickHandler              | Function: `() => void` or `() => Promise<void>` | -                                          | No       | Invoked when the next button of the current step is clicked                                                              |
+| footer.prevBtn.label                       | String                                     | `Back to ${prevStepLabel}` | No | Set prev button label of the current step                                                                                |
+| footer.prevBtn.className                   | String                                     | `undefined` | No | CSS classname(s) to be applied to prev button of the current step                                                                                |
 | content                                    | ReactNode                                       | -                                          | Yes      | The content to display for the step                                                                                      |
 | isLoading                                  | Boolean                                         | `false`                                    | No       | If true, the 'Next' button will be disabled                                                                              |
 | isError                                    | Boolean                                         | `false`                                    | No       | If true, will display the step with error UI                                                                             |
@@ -146,13 +156,13 @@ const App = () => {
 
 | Prop | Type | Default                        | Required | Description                                                          |
 | ---  | ---  |--------------------------------|---       |----------------------------------------------------------------------|
-| prevBtnLabel | String | `Back to ${prevStepLabel}`     | No  | Label for the prev button                                            |
-| prevBtnClassName | String | `undefined`                    | No | CSS classname(s) to be applied to prev button                        |
-| nextBtnLabel | String | `Continue to ${nextStepLabel}` | No  | Label for the next button                                            |
-| nextBtnClassName | String | `undefined`                    | No | CSS classname(s) to be applied to next button                        |
-| submitBtnLabel | String | `Submit`                       | No | Label for submit button in the last step                             |
-| submitBtnClassName | String | `undefined`                    | No | CSS classname(s) to be applied to the submit button in the last step |
-| submitHandler | Function: `() => void` or `() => Promise<void>` | -                              | Yes  | Invoked when the submit button is clicked                            |
+| prevBtn.label | String | `Back to ${prevStepLabel}`     | No  | Label for the prev button                                            |
+| prevBtn.className | String | `undefined`                    | No | CSS classname(s) to be applied to prev button                        |
+| nextBtn.label | String | `Continue to ${nextStepLabel}` | No  | Label for the next button                                            |
+| nextBtn.className | String | `undefined`                    | No | CSS classname(s) to be applied to next button                        |
+| submitBtn.label | String | `Submit`                       | No | Label for submit button in the last step                             |
+| submitBtn.className | String | `undefined`                    | No | CSS classname(s) to be applied to the submit button in the last step |
+| submitBtn.onClickHandler | Function: `() => void` or `() => Promise<void>` | -                              | Yes  | Invoked when the submit button is clicked                            |
 
 <p dir="rtl"><a href="#table-of-contents">Back to top</a></p>
 
@@ -172,7 +182,10 @@ const App = () => {
 
 ### Navigate to step programmatically:
 
-The **ref** passed to the Stepper component exposes a **navigateToStep** function, that can programmatically navigate the user to a specific step. It can be useful in scenarios when controlling step navigation from outside the Stepper component is required.
+The **ref** passed to the Stepper component exposes two navigation functions that can programmatically navigate the user to a specific step. It can be useful in scenarios when controlling step navigation from outside the Stepper component is required.
+
+- **navigateToStepByIndex(index: number)**: Navigate to a step using its zero-based index position
+- **navigateToStepById(id: string)**: Navigate to a step using its unique identifier (requires the step to have an `id` property)
 
 > ### ***Important Note***:
 >
@@ -188,17 +201,41 @@ import { Stepper } from 'react-dynamic-stepper';
 const App = () => {
   const stepperRef = useRef(null);
 
+  const steps = [
+    {
+      id: 'step-1',
+      header: { label: 'Step 1' },
+      content: <div>First step content</div>,
+      isComplete: true,
+    },
+    {
+      id: 'step-2', 
+      header: { label: 'Step 2' },
+      content: <div>Second step content</div>,
+      isComplete: true,
+    },
+    // ... more steps
+  ];
+
   return (
     <>
       <button
         onClick={() => {
-          stepperRef.current?.navigateToStep(1);
+          stepperRef.current?.navigateToStepByIndex(1);
         }}
       >
-        Navigate to step 2 programmatically
+        Navigate to step 2 by index
+      </button>
+      <button
+        onClick={() => {
+          stepperRef.current?.navigateToStepById('step-2');
+        }}
+      >
+        Navigate to step 2 by ID
       </button>
       <Stepper
         ref={stepperRef}
+        steps={steps}
         /* OTHER PROPS */
       />
     </>
@@ -211,22 +248,46 @@ const App = () => {
 
 ```typescript jsx
 import { useRef } from 'react';
-import { Stepper, NavigateToStepHandler } from 'react-dynamic-stepper';
+import { Stepper, StepperRef, StepInterface } from 'react-dynamic-stepper';
 
 const App = () => {
-  const stepperRef = useRef<NavigateToStepHandler>(null);
+  const stepperRef = useRef<StepperRef>(null);
+
+  const steps: StepInterface[] = [
+    {
+      id: 'step-1',
+      header: { label: 'Step 1' },
+      content: <div>First step content</div>,
+      isComplete: true,
+    },
+    {
+      id: 'step-2', 
+      header: { label: 'Step 2' },
+      content: <div>Second step content</div>,
+      isComplete: true,
+    },
+    // ... more steps
+  ];
 
   return (
     <>
       <button
         onClick={() => {
-          stepperRef.current?.navigateToStep(1);
+          stepperRef.current?.navigateToStepByIndex(1);
         }}
       >
-        Navigate to step 2 programmatically
+        Navigate to step 2 by index
+      </button>
+      <button
+        onClick={() => {
+          stepperRef.current?.navigateToStepById('step-2');
+        }}
+      >
+        Navigate to step 2 by ID
       </button>
       <Stepper
         ref={stepperRef}
+        steps={steps}
         /* OTHER PROPS */
       />
     </>
@@ -239,7 +300,7 @@ const App = () => {
 
 ### Invoke a function on Next button click of current step
 
-- `step.onClickHandler` => This is invoked when the 'Next' button of the current step is clicked.
+- `step.footer.nextBtn.onClickHandler` => This is invoked when the 'Next' button of the current step is clicked.
 - If your `onClickHandler` returns a Promise and you want to navigate to the next step only if the Promise resolves successfully, you need to `throw error` inside the **catch** block:
 ```typescript
 const submitCurrentStep = async () => {

@@ -4,13 +4,19 @@ import { StepperFooter } from '../stepperFooter/StepperFooter';
 import styles from './Stepper.module.scss';
 
 export interface FooterDataInterface {
-  prevBtnLabel?: string;
-  prevBtnClassName?: string;
-  nextBtnLabel?: string;
-  nextBtnClassName?: string;
-  submitBtnLabel?: string;
-  submitBtnClassName?: string;
-  submitHandler: () => void | Promise<void>;
+  prevBtn?: {
+    label?: string;
+    className?: string;
+  };
+  nextBtn?: {
+    label?: string;
+    className?: string;
+  };
+  submitBtn: {
+    label?: string;
+    className?: string;
+    onClickHandler: () => void | Promise<void>;
+  };
 }
 
 export interface PalletInterface {
@@ -22,16 +28,24 @@ export interface PalletInterface {
 }
 
 export interface StepInterface {
+  id?: string;
   header: {
     label: string;
     indicator?: ReactNode;
     isKeepIndicatorOnComplete?: boolean;
   };
   footer?: {
-    nextButtonLabel?: string;
-    prevButtonLabel?: string;
-    isPreventNextClick?: boolean;
-    onClickHandler?: () => void | Promise<void>;
+    prevBtn?: {
+      label?: string;
+      className?: string;
+    };
+    nextBtn?: {
+      label?: string;
+      className?: string;
+      //prevent the next button click even if the step is completed
+      isPreventNextClick?: boolean;
+      onClickHandler?: () => void | Promise<void>;
+    };
   };
   content: ReactNode;
   isLoading?: boolean;
@@ -46,16 +60,19 @@ export interface StepperInterface {
   isInline?: boolean;
   isSequenceStepper?: boolean;
   isStepConnector?: boolean;
+  disableStepHeaderClick?: boolean;
   steps: StepInterface[];
   footerData: FooterDataInterface;
   pallet?: PalletInterface;
+  customConnector?: ReactNode;
 }
 
-export type NavigateToStepHandler = {
-  navigateToStep: (index: number) => void;
+export type StepperRef = {
+  navigateToStepByIndex: (index: number) => void;
+  navigateToStepById: (id: string) => void;
 };
 
-export const Stepper = forwardRef<NavigateToStepHandler, StepperInterface>(
+export const Stepper = forwardRef<StepperRef, StepperInterface>(
   (
     {
       isRightToLeftLanguage = false,
@@ -63,8 +80,10 @@ export const Stepper = forwardRef<NavigateToStepHandler, StepperInterface>(
       isInline = false,
       isSequenceStepper = false,
       isStepConnector = true,
+      disableStepHeaderClick,
       steps,
       footerData,
+      customConnector,
       pallet = {
         default: '#627c90',
         warning: '#f1c40f',
@@ -79,7 +98,7 @@ export const Stepper = forwardRef<NavigateToStepHandler, StepperInterface>(
       isLastStep = currentTabIndex === steps.length - 1,
       isPrevBtn = currentTabIndex !== 0;
 
-    const navigateToStepHandler = useCallback(
+    const navigateToStepByIndexHandler = useCallback(
       (index: number) => {
         if (index !== currentTabIndex) {
           setCurrentTabIndex(index);
@@ -88,8 +107,18 @@ export const Stepper = forwardRef<NavigateToStepHandler, StepperInterface>(
       [currentTabIndex]
     );
 
+    const navigateToStepByIdHandler = useCallback(
+      (id: string) => {
+        const stepIndex = steps.findIndex((step) => step.id === id);
+        if (stepIndex !== -1) {
+          navigateToStepByIndexHandler(stepIndex);
+        }
+      },
+      [steps, navigateToStepByIndexHandler]
+    );
+
     const nextStepHandler = () => {
-      if (!steps[currentTabIndex].footer?.isPreventNextClick) {
+      if (!steps[currentTabIndex].footer?.nextBtn?.isPreventNextClick) {
         setCurrentTabIndex((prev) => {
           if (prev !== steps.length - 1) {
             return prev + 1;
@@ -106,9 +135,10 @@ export const Stepper = forwardRef<NavigateToStepHandler, StepperInterface>(
     useImperativeHandle(
       ref,
       () => ({
-        navigateToStep: navigateToStepHandler,
+        navigateToStepByIndex: navigateToStepByIndexHandler,
+        navigateToStepById: navigateToStepByIdHandler,
       }),
-      [navigateToStepHandler]
+      [navigateToStepByIndexHandler, navigateToStepByIdHandler]
     );
 
     return (
@@ -124,7 +154,7 @@ export const Stepper = forwardRef<NavigateToStepHandler, StepperInterface>(
         >
           <StepperHead
             steps={steps}
-            navigateToStepHandler={navigateToStepHandler}
+            navigateToStepHandler={navigateToStepByIndexHandler}
             isVertical={isVertical}
             isInline={isInline}
             currentTabIndex={currentTabIndex}
@@ -132,6 +162,8 @@ export const Stepper = forwardRef<NavigateToStepHandler, StepperInterface>(
             isSequenceStepper={isSequenceStepper}
             pallet={pallet}
             isStepConnector={isStepConnector}
+            disableStepHeaderClick={disableStepHeaderClick}
+            customConnector={customConnector}
           />
           <div className={styles['stepper-body']}>
             {steps.map((el, i) => (

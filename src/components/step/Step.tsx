@@ -15,6 +15,9 @@ export interface StepInterface {
   isStepConnector: boolean;
   isRightToLeftLanguage: boolean;
   pallet?: PalletInterface;
+  disableStepHeaderClick?: boolean;
+  isVertical?: boolean;
+  customConnector?: ReactNode;
 }
 
 export const Step: FC<StepInterface> = ({
@@ -30,6 +33,9 @@ export const Step: FC<StepInterface> = ({
   isStepConnector,
   isRightToLeftLanguage,
   pallet,
+  disableStepHeaderClick,
+  customConnector,
+  isVertical,
 }) => {
   const classes = [styles['stepper-step']];
 
@@ -51,6 +57,12 @@ export const Step: FC<StepInterface> = ({
   if (isStepConnector) {
     classes.push(styles['is-step-connector']);
   }
+  if (disableStepHeaderClick) {
+    classes.push(styles['is-disable-step-click']);
+  }
+  if (customConnector) {
+    classes.push(styles['has-custom-connector']);
+  }
 
   return (
     <div
@@ -58,6 +70,7 @@ export const Step: FC<StepInterface> = ({
       className={classes.join(' ')}
       style={
         {
+          flexBasis: isVertical && isStepConnector && customConnector ? 'auto' : '100%',
           '--default-background-color': pallet?.default,
           '--warning-background-color': pallet?.warning,
           '--danger-background-color': pallet?.danger,
@@ -69,7 +82,11 @@ export const Step: FC<StepInterface> = ({
       <div className={styles['stepper-indicator']}>
         <span
           className={styles['stepper-indicator-info']}
-          onClick={isComplete || isError ? () => navigateToStepHandler(index) : undefined}
+          onClick={
+            (isComplete || isError) && !disableStepHeaderClick
+              ? () => navigateToStepHandler(index)
+              : undefined
+          }
         >
           {!isKeepIndicatorOnComplete && isComplete ? (
             <svg
@@ -87,7 +104,11 @@ export const Step: FC<StepInterface> = ({
       </div>
       <div
         className={styles['stepper-label']}
-        onClick={isComplete || isError ? () => navigateToStepHandler(index) : undefined}
+        onClick={
+          (isComplete || isError) && !disableStepHeaderClick
+            ? () => navigateToStepHandler(index)
+            : undefined
+        }
       >
         {label}
       </div>

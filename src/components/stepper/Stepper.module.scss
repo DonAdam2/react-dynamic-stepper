@@ -32,7 +32,6 @@ $stepHeadPadding: 0.5;
         position: relative;
         text-align: center;
         padding: $stepHeadPadding * 1rem;
-        flex-basis: 100%;
 
         &.is-right-to-left {
           &.is-step-connector {
@@ -71,6 +70,16 @@ $stepHeadPadding: 0.5;
             &:after {
               background-color: var(--success-background-color);
             }
+          }
+        }
+
+        &.is-disable-step-click {
+          .stepper-indicator-info {
+            cursor: initial;
+          }
+
+          .stepper-label {
+            cursor: initial;
           }
         }
 
@@ -127,6 +136,12 @@ $stepHeadPadding: 0.5;
             z-index: 1;
           }
 
+          &.has-custom-connector {
+            &:after {
+              display: none;
+            }
+          }
+
           &:last-child:after {
             display: none;
           }
@@ -169,6 +184,18 @@ $stepHeadPadding: 0.5;
         z-index: 2;
       }
     }
+
+    .custom-connector-wrapper {
+      display: flex;
+      justify-content: center;
+      z-index: 1;
+
+      &.inline-connector {
+        flex: 1;
+        min-height: 0.125rem;
+        padding-top: 1rem;
+      }
+    }
   }
 
   /* styles of inline stepper */
@@ -179,6 +206,12 @@ $stepHeadPadding: 0.5;
           &:after {
             top: 50%;
             transform: translateY(-50%);
+          }
+
+          &.has-custom-connector {
+            &:after {
+              display: none;
+            }
           }
         }
       }
@@ -204,14 +237,15 @@ $stepHeadPadding: 0.5;
 
     .vertical-stepper-head {
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       width: auto;
 
       .inner-vertical-head-wrapper {
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: space-between;
         min-height: 70%;
+        height: 100%;
       }
 
       .stepper-step {
@@ -245,6 +279,14 @@ $stepHeadPadding: 0.5;
 
           &:after {
             content: none;
+          }
+
+          &.has-custom-connector {
+            &:not(:last-child) {
+              &::before {
+                display: none;
+              }
+            }
           }
 
           &.is-complete {
@@ -282,6 +324,17 @@ $stepHeadPadding: 0.5;
 
       .stepper-label {
         padding-inline-start: calc(($dimensions / 4) * 1rem);
+      }
+
+      .custom-connector-wrapper {
+        &.vertical-connector {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          padding-inline-start: 1rem;
+          width: 100%;
+          min-height: 1rem;
+        }
       }
 
       + .stepper-body {
