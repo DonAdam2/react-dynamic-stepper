@@ -174,7 +174,10 @@ const App = () => {
 
 ### Navigate to step programmatically:
 
-The **ref** passed to the Stepper component exposes a **navigateToStep** function, that can programmatically navigate the user to a specific step. It can be useful in scenarios when controlling step navigation from outside the Stepper component is required.
+The **ref** passed to the Stepper component exposes two navigation functions that can programmatically navigate the user to a specific step. It can be useful in scenarios when controlling step navigation from outside the Stepper component is required.
+
+- **navigateToStepByIndex(index: number)**: Navigate to a step using its zero-based index position
+- **navigateToStepById(id: string)**: Navigate to a step using its unique identifier (requires the step to have an `id` property)
 
 > ### ***Important Note***:
 >
@@ -190,6 +193,22 @@ import { Stepper } from 'react-dynamic-stepper';
 const App = () => {
   const stepperRef = useRef(null);
 
+  const steps = [
+    {
+      id: 'step-1',
+      header: { label: 'Step 1' },
+      content: <div>First step content</div>,
+      isComplete: true,
+    },
+    {
+      id: 'step-2', 
+      header: { label: 'Step 2' },
+      content: <div>Second step content</div>,
+      isComplete: true,
+    },
+    // ... more steps
+  ];
+
   return (
     <>
       <button
@@ -197,10 +216,18 @@ const App = () => {
           stepperRef.current?.navigateToStepByIndex(1);
         }}
       >
-        navigate by index to step 2 programmatically
+        Navigate to step 2 by index
+      </button>
+      <button
+        onClick={() => {
+          stepperRef.current?.navigateToStepById('step-2');
+        }}
+      >
+        Navigate to step 2 by ID
       </button>
       <Stepper
         ref={stepperRef}
+        steps={steps}
         /* OTHER PROPS */
       />
     </>
@@ -218,6 +245,22 @@ import { Stepper, StepperRef } from 'react-dynamic-stepper';
 const App = () => {
   const stepperRef = useRef<StepperRef>(null);
 
+  const steps = [
+    {
+      id: 'step-1',
+      header: { label: 'Step 1' },
+      content: <div>First step content</div>,
+      isComplete: true,
+    },
+    {
+      id: 'step-2', 
+      header: { label: 'Step 2' },
+      content: <div>Second step content</div>,
+      isComplete: true,
+    },
+    // ... more steps
+  ];
+
   return (
     <>
       <button
@@ -225,10 +268,18 @@ const App = () => {
           stepperRef.current?.navigateToStepByIndex(1);
         }}
       >
-        navigate by index to step 2 programmatically
+        Navigate to step 2 by index
+      </button>
+      <button
+        onClick={() => {
+          stepperRef.current?.navigateToStepById('step-2');
+        }}
+      >
+        Navigate to step 2 by ID
       </button>
       <Stepper
         ref={stepperRef}
+        steps={steps}
         /* OTHER PROPS */
       />
     </>

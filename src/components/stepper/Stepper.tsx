@@ -22,6 +22,7 @@ export interface PalletInterface {
 }
 
 export interface StepInterface {
+  id?: string;
   header: {
     label: string;
     indicator?: ReactNode;
@@ -55,6 +56,7 @@ export interface StepperInterface {
 
 export type StepperRef = {
   navigateToStepByIndex: (index: number) => void;
+  navigateToStepById: (id: string) => void;
 };
 
 export const Stepper = forwardRef<StepperRef, StepperInterface>(
@@ -83,13 +85,23 @@ export const Stepper = forwardRef<StepperRef, StepperInterface>(
       isLastStep = currentTabIndex === steps.length - 1,
       isPrevBtn = currentTabIndex !== 0;
 
-    const navigateToStepHandler = useCallback(
+    const navigateToStepByIndexHandler = useCallback(
       (index: number) => {
         if (index !== currentTabIndex) {
           setCurrentTabIndex(index);
         }
       },
       [currentTabIndex]
+    );
+
+    const navigateToStepByIdHandler = useCallback(
+      (id: string) => {
+        const stepIndex = steps.findIndex((step) => step.id === id);
+        if (stepIndex !== -1) {
+          navigateToStepByIndexHandler(stepIndex);
+        }
+      },
+      [steps, navigateToStepByIndexHandler]
     );
 
     const nextStepHandler = () => {
@@ -110,9 +122,10 @@ export const Stepper = forwardRef<StepperRef, StepperInterface>(
     useImperativeHandle(
       ref,
       () => ({
-        navigateToStepByIndex: navigateToStepHandler,
+        navigateToStepByIndex: navigateToStepByIndexHandler,
+        navigateToStepById: navigateToStepByIdHandler,
       }),
-      [navigateToStepHandler]
+      [navigateToStepByIndexHandler, navigateToStepByIdHandler]
     );
 
     return (
@@ -128,7 +141,7 @@ export const Stepper = forwardRef<StepperRef, StepperInterface>(
         >
           <StepperHead
             steps={steps}
-            navigateToStepHandler={navigateToStepHandler}
+            navigateToStepHandler={navigateToStepByIndexHandler}
             isVertical={isVertical}
             isInline={isInline}
             currentTabIndex={currentTabIndex}
