@@ -46,7 +46,12 @@ export const StepperHead: FC<StepperHeadInterface> = ({
         initialWrapper={(children: any) => <>{children}</>}
         condition={isVertical}
         wrapper={(children: any) => (
-          <div className={styles['inner-vertical-head-wrapper']}>{children}</div>
+          <div
+            className={styles['inner-vertical-head-wrapper']}
+            data-testid="inner-vertical-head-wrapper"
+          >
+            {children}
+          </div>
         )}
       >
         {steps.map((el, i) => (
