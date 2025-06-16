@@ -1,4 +1,3 @@
-
 [![Storybook][badge_storybook]][package_link]
 [![Npm version][badge_npm-version]][package_link]
 [![Npm downloads][badge_npm-downloads]][package_link]
@@ -76,7 +75,9 @@ const App = () => {
             },
             content: <div>Second step content</div>,
             footer: {
-              onClickHandler: () => console.log('clicked on second step next button'),
+              nextBtn: {
+                onClickHandler: () => console.log('clicked on second step next button'),
+              },
             },
             isLoading: false,
             isError: false,
@@ -137,10 +138,12 @@ const App = () => {
 | header.label                               | String                                          | -                                          | Yes      | The label to display on the step header                                                                                  |
 | header.indicator                           | ReactNode                                       | Step number                                | No       | Custom indicator for the step                                                                                            |
 | header.isKeepIndicatorOnComplete | Boolean                | `false`                                    | No       | Keep header indicator when step is completed                                                                             |
-| footer.nextButtonLabel                     | String                                     | `Continue to ${nextStepLabel}` or `Submit` | No | Set next button label of the current step                                                                                |
-| footer.prevButtonLabel                     | String                                     | `Back to ${prevStepLabel}` | No | Set prev button label of the current step                                                                                |
-| footer.isPreventNextClick                  | Boolean                                 | `false` | No | If true, clicking the ‘Next’ or ‘Submit’ button for the current step will not trigger any action unless its set to false |
-| footer.onClickHandler                      | Function: `() => void` or `() => Promise<void>` | -                                          | No       | Invoked when the next button of the current step is clicked                                                              |
+| footer.nextBtn.label                       | String                                     | `Continue to ${nextStepLabel}` or `Submit` | No | Set next button label of the current step                                                                                |
+| footer.nextBtn.className                   | String                                     | `undefined` | No | CSS classname(s) to be applied to next button of the current step                                                                                |
+| footer.nextBtn.isPreventNextClick          | Boolean                                 | `false` | No | If true, clicking the 'Next' or 'Submit' button for the current step will not trigger any action unless its set to false |
+| footer.nextBtn.onClickHandler              | Function: `() => void` or `() => Promise<void>` | -                                          | No       | Invoked when the next button of the current step is clicked                                                              |
+| footer.prevBtn.label                       | String                                     | `Back to ${prevStepLabel}` | No | Set prev button label of the current step                                                                                |
+| footer.prevBtn.className                   | String                                     | `undefined` | No | CSS classname(s) to be applied to prev button of the current step                                                                                |
 | content                                    | ReactNode                                       | -                                          | Yes      | The content to display for the step                                                                                      |
 | isLoading                                  | Boolean                                         | `false`                                    | No       | If true, the 'Next' button will be disabled                                                                              |
 | isError                                    | Boolean                                         | `false`                                    | No       | If true, will display the step with error UI                                                                             |
@@ -245,12 +248,12 @@ const App = () => {
 
 ```typescript jsx
 import { useRef } from 'react';
-import { Stepper, StepperRef } from 'react-dynamic-stepper';
+import { Stepper, StepperRef, StepInterface } from 'react-dynamic-stepper';
 
 const App = () => {
   const stepperRef = useRef<StepperRef>(null);
 
-  const steps = [
+  const steps: StepInterface[] = [
     {
       id: 'step-1',
       header: { label: 'Step 1' },
@@ -297,7 +300,7 @@ const App = () => {
 
 ### Invoke a function on Next button click of current step
 
-- `step.footer.onClickHandler` => This is invoked when the 'Next' button of the current step is clicked.
+- `step.footer.nextBtn.onClickHandler` => This is invoked when the 'Next' button of the current step is clicked.
 - If your `onClickHandler` returns a Promise and you want to navigate to the next step only if the Promise resolves successfully, you need to `throw error` inside the **catch** block:
 ```typescript
 const submitCurrentStep = async () => {

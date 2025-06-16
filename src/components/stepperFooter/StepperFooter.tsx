@@ -32,9 +32,9 @@ export const StepperFooter: FC<StepperFooterInterface> = ({
   }
 
   const submitCurrentStep = async () => {
-    if (!steps[currentTabIndex].footer?.isPreventNextClick) {
+    if (!steps[currentTabIndex].footer?.nextBtn?.isPreventNextClick) {
       try {
-        await steps[currentTabIndex].footer?.onClickHandler?.();
+        await steps[currentTabIndex].footer?.nextBtn?.onClickHandler?.();
         nextStepHandler();
       } catch (err) {
         console.log(err);
@@ -44,7 +44,7 @@ export const StepperFooter: FC<StepperFooterInterface> = ({
   };
 
   const submitHandler = async () => {
-    if (!steps[currentTabIndex].footer?.isPreventNextClick) {
+    if (!steps[currentTabIndex].footer?.nextBtn?.isPreventNextClick) {
       try {
         await footerData.submitBtn.onClickHandler();
       } catch (err) {
@@ -65,7 +65,7 @@ export const StepperFooter: FC<StepperFooterInterface> = ({
           onClick={previousStepHandler}
         >
           {footerData?.prevBtn?.label ??
-            steps[currentTabIndex]?.footer?.prevButtonLabel ??
+            steps[currentTabIndex]?.footer?.prevBtn?.label ??
             `Back to ${steps[currentTabIndex - 1].header.label}`}
         </button>
       )}
@@ -80,7 +80,7 @@ export const StepperFooter: FC<StepperFooterInterface> = ({
         onClick={
           isLastStep
             ? submitHandler
-            : steps[currentTabIndex].footer?.onClickHandler
+            : steps[currentTabIndex].footer?.nextBtn?.onClickHandler
               ? submitCurrentStep
               : nextStepHandler
         }
@@ -93,7 +93,7 @@ export const StepperFooter: FC<StepperFooterInterface> = ({
         {isLastStep
           ? (footerData?.submitBtn?.label ?? 'Submit')
           : (footerData?.nextBtn?.label ??
-            steps[currentTabIndex]?.footer?.nextButtonLabel ??
+            steps[currentTabIndex]?.footer?.nextBtn?.label ??
             `Continue to ${steps[currentTabIndex + 1].header.label}`)}
       </button>
     </div>

@@ -35,11 +35,17 @@ export interface StepInterface {
     isKeepIndicatorOnComplete?: boolean;
   };
   footer?: {
-    nextButtonLabel?: string;
-    prevButtonLabel?: string;
-    //prevent the next button click even if the step is completed
-    isPreventNextClick?: boolean;
-    onClickHandler?: () => void | Promise<void>;
+    prevBtn?: {
+      label?: string;
+      className?: string;
+    };
+    nextBtn?: {
+      label?: string;
+      className?: string;
+      //prevent the next button click even if the step is completed
+      isPreventNextClick?: boolean;
+      onClickHandler?: () => void | Promise<void>;
+    };
   };
   content: ReactNode;
   isLoading?: boolean;
@@ -112,7 +118,7 @@ export const Stepper = forwardRef<StepperRef, StepperInterface>(
     );
 
     const nextStepHandler = () => {
-      if (!steps[currentTabIndex].footer?.isPreventNextClick) {
+      if (!steps[currentTabIndex].footer?.nextBtn?.isPreventNextClick) {
         setCurrentTabIndex((prev) => {
           if (prev !== steps.length - 1) {
             return prev + 1;

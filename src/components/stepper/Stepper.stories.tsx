@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
-import { StepperRef, Stepper, StepperInterface } from './Stepper';
+import { StepperRef, Stepper, StepperInterface, StepInterface } from './Stepper';
 import { RefAttributes, useRef, useState } from 'react';
 import { action } from 'storybook/actions';
 
@@ -56,7 +56,7 @@ function RenderStepper(props: StepperInterface & RefAttributes<StepperRef>) {
     console.log('second step clicked');
   };
 
-  const steps = [
+  const steps: StepInterface[] = [
     {
       header: {
         label: 'Step 1',
@@ -97,7 +97,9 @@ function RenderStepper(props: StepperInterface & RefAttributes<StepperRef>) {
         </div>
       ),
       footer: {
-        onClickHandler: () => secondStepAsyncFunc(),
+        nextBtn: {
+          onClickHandler: () => secondStepAsyncFunc(),
+        },
       },
       isLoading: isSecondStepLoading,
       isError: !acceptSecondTerms.checked && acceptSecondTerms.touched,
@@ -173,7 +175,7 @@ function NavigateProgrammaticallyStepper(props: StepperInterface & RefAttributes
     console.log('second step clicked');
   };
 
-  const steps = [
+  const steps: StepInterface[] = [
     {
       id: 'step-1',
       header: {
@@ -216,7 +218,9 @@ function NavigateProgrammaticallyStepper(props: StepperInterface & RefAttributes
         </div>
       ),
       footer: {
-        onClickHandler: () => secondStepAsyncFunc(),
+        nextBtn: {
+          onClickHandler: () => secondStepAsyncFunc(),
+        },
       },
       isLoading: isSecondStepLoading,
       isError: !acceptSecondTerms.checked && acceptSecondTerms.touched,
@@ -331,13 +335,15 @@ function PreventNextClickStepper(props: StepperInterface & RefAttributes<Stepper
     console.log('second step clicked');
   };
 
-  const steps = [
+  const steps: StepInterface[] = [
     {
       header: {
         label: 'Step 1',
       },
       footer: {
-        isPreventNextClick,
+        nextBtn: {
+          isPreventNextClick,
+        },
       },
       content: (
         <div>
@@ -396,7 +402,9 @@ function PreventNextClickStepper(props: StepperInterface & RefAttributes<Stepper
         </div>
       ),
       footer: {
-        onClickHandler: () => secondStepAsyncFunc(),
+        nextBtn: {
+          onClickHandler: () => secondStepAsyncFunc(),
+        },
       },
       isLoading: isSecondStepLoading,
       isError: !acceptSecondTerms.checked && acceptSecondTerms.touched,
@@ -471,13 +479,15 @@ function StepperWithCustomStepsFooter(props: StepperInterface & RefAttributes<St
     console.log('second step clicked');
   };
 
-  const steps = [
+  const steps: StepInterface[] = [
     {
       header: {
         label: 'Step 1',
       },
       footer: {
-        nextButtonLabel: 'Go to step 2',
+        nextBtn: {
+          label: 'Go to step 2',
+        },
       },
       content: (
         <div>
@@ -503,9 +513,13 @@ function StepperWithCustomStepsFooter(props: StepperInterface & RefAttributes<St
         label: 'Step 2',
       },
       footer: {
-        nextButtonLabel: 'Go to step 3',
-        prevButtonLabel: 'Go to step 1',
-        onClickHandler: () => secondStepAsyncFunc(),
+        nextBtn: {
+          label: 'Go to step 3',
+          onClickHandler: () => secondStepAsyncFunc(),
+        },
+        prevBtn: {
+          label: 'Go to step 1',
+        },
       },
       content: (
         <div>
