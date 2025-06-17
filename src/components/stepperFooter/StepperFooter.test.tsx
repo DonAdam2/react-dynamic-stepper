@@ -575,8 +575,8 @@ describe('StepperFooter', () => {
         currentTabIndex: 1,
       };
 
-    const { container } = render(<StepperFooter {...footerProps} />);
-    const footerDiv = container.firstChild as HTMLElement;
+    render(<StepperFooter {...footerProps} />);
+    const footerDiv = screen.getByTestId('stepper-footer');
 
     expect(footerDiv).toHaveStyle('justify-content: space-between');
   });
@@ -599,13 +599,13 @@ describe('StepperFooter', () => {
         currentTabIndex: 0,
       };
 
-    const { container } = render(<StepperFooter {...footerProps} />);
-    const footerDiv = container.firstChild as HTMLElement;
+    render(<StepperFooter {...footerProps} />);
+    const footerDiv = screen.getByTestId('stepper-footer');
 
     expect(footerDiv).toHaveStyle('justify-content: flex-end');
   });
 
-  it('prioritizes footerData labels over step-level labels', () => {
+  it('prioritizes step-level labels over footerData labels', () => {
     const previousStepHandler = jest.fn(),
       nextStepHandler = jest.fn(),
       submitHandler = jest.fn(),
@@ -639,7 +639,7 @@ describe('StepperFooter', () => {
 
     render(<StepperFooter {...footerProps} />);
 
-    expect(screen.getByText('Footer Previous')).toBeInTheDocument();
-    expect(screen.queryByText('Step Previous')).not.toBeInTheDocument();
+    expect(screen.getByText('Step Previous')).toBeInTheDocument();
+    expect(screen.queryByText('Footer Previous')).not.toBeInTheDocument();
   });
 });
