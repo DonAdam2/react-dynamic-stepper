@@ -487,6 +487,7 @@ function StepperWithCustomStepsFooter(props: StepperInterface & RefAttributes<St
       footer: {
         nextBtn: {
           label: 'Go to step 2',
+          className: 'step-1-next-btn',
         },
       },
       content: (
@@ -515,10 +516,12 @@ function StepperWithCustomStepsFooter(props: StepperInterface & RefAttributes<St
       footer: {
         nextBtn: {
           label: 'Go to step 3',
+          className: 'step-2-next-btn',
           onClickHandler: () => secondStepAsyncFunc(),
         },
         prevBtn: {
           label: 'Go to step 1',
+          className: 'step-2-prev-btn',
         },
       },
       content: (

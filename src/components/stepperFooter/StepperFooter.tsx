@@ -61,21 +61,23 @@ export const StepperFooter: FC<StepperFooterInterface> = ({
     >
       {isPrevBtn && (
         <button
-          className={`${footerData?.prevBtn?.className ?? styles['stepper-footer-btn']}`}
+          className={`${steps[currentTabIndex]?.footer?.prevBtn?.className ?? footerData?.prevBtn?.className ?? styles['stepper-footer-btn']}`}
           onClick={previousStepHandler}
         >
-          {footerData?.prevBtn?.label ??
-            steps[currentTabIndex]?.footer?.prevBtn?.label ??
+          {steps[currentTabIndex]?.footer?.prevBtn?.label ??
+            footerData?.prevBtn?.label ??
             `Back to ${steps[currentTabIndex - 1].header.label}`}
         </button>
       )}
       <button
         className={`${
-          !isLastStep && footerData?.nextBtn?.className
-            ? footerData.nextBtn.className
-            : isLastStep && footerData?.submitBtn?.className
-              ? footerData.submitBtn.className
-              : classes.join(' ')
+          !isLastStep && steps[currentTabIndex]?.footer?.nextBtn?.className
+            ? steps[currentTabIndex].footer.nextBtn.className
+            : !isLastStep && footerData?.nextBtn?.className
+              ? footerData.nextBtn.className
+              : isLastStep && footerData?.submitBtn?.className
+                ? footerData.submitBtn.className
+                : classes.join(' ')
         }`}
         onClick={
           isLastStep
@@ -92,8 +94,8 @@ export const StepperFooter: FC<StepperFooterInterface> = ({
       >
         {isLastStep
           ? (footerData?.submitBtn?.label ?? 'Submit')
-          : (footerData?.nextBtn?.label ??
-            steps[currentTabIndex]?.footer?.nextBtn?.label ??
+          : (steps[currentTabIndex]?.footer?.nextBtn?.label ??
+            footerData?.nextBtn?.label ??
             `Continue to ${steps[currentTabIndex + 1].header.label}`)}
       </button>
     </div>
