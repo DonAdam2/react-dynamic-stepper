@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.2](https://github.com/DonAdam2/react-dynamic-stepper/compare/v3.0.1...v3.0.2) (2025-06-17)
+
+
+### Bug Fixes
+
+* **stepperfooter.tsx:** fix className and label priority ([44eb81a](https://github.com/DonAdam2/react-dynamic-stepper/commit/44eb81ad7dce02ee4d7d17468174139734c862ae))
+
 ### [3.0.1](https://github.com/DonAdam2/react-dynamic-stepper/compare/v3.0.0...v3.0.1) (2025-06-16)
 
 ## [3.0.0](https://github.com/DonAdam2/react-dynamic-stepper/compare/v2.0.1...v3.0.0) (2025-06-16)
