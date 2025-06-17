@@ -57,6 +57,7 @@ export const StepperFooter: FC<StepperFooterInterface> = ({
   return (
     <div
       className={styles['stepper-footer']}
+      data-testid="stepper-footer"
       style={{ justifyContent: isPrevBtn ? 'space-between' : 'flex-end' }}
     >
       {isPrevBtn && (
