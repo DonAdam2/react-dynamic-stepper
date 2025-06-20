@@ -185,3 +185,5 @@ export const Stepper = forwardRef<StepperRef, StepperInterface>(
     );
   }
 );
+
+Stepper.displayName = 'Stepper';
