@@ -17,7 +17,7 @@
 
 Advanced and multi-feature stepper component designed to be incredibly versatile for a variety of workflows and use cases.
 
-It supports the following:
+It supports the following features:
 - Horizontal stepper UI.
 - Vertical stepper UI.
 - Inline stepper UI.
