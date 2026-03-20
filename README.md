@@ -10,6 +10,7 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Stepper props](#stepper-props)
+- [Exported Types](#exported-types)
 - [Features and Methods](#features-and-methods)
 - [Resources](#resources)
 
@@ -24,8 +25,12 @@ It supports the following features:
 - Sequence stepper.
 - Right to left languages.
 - Custom pallet.
-- Custom header.
-- Custom footer.
+- Custom header (indicator and label).
+- Custom footer (global and per-step labels, classnames).
+- Custom connector between steps.
+- Disable step header click.
+- Prevent next click per step.
+- Keep custom indicator on complete.
 - Navigate to the required step programmatically.
 
 <p dir="rtl"><a href="#table-of-contents">Back to top</a></p>
@@ -178,6 +183,23 @@ const App = () => {
 
 <p dir="rtl"><a href="#table-of-contents">Back to top</a></p>
 
+## Exported Types
+
+The following TypeScript types are exported and available for consumers:
+
+```typescript
+import {
+  Stepper,
+  StepperRef,
+  StepperInterface,
+  StepInterface,
+  FooterDataInterface,
+  PalletInterface,
+} from 'react-dynamic-stepper';
+```
+
+<p dir="rtl"><a href="#table-of-contents">Back to top</a></p>
+
 ## Features and Methods
 
 ### Navigate to step programmatically:
@@ -313,6 +335,19 @@ const submitCurrentStep = async () => {
     }
   };
 ```
+
+<p dir="rtl"><a href="#table-of-contents">Back to top</a></p>
+
+### Step-level footer overrides
+
+Step-level footer props (`step.footer`) take priority over global footer props (`footerData`). This allows you to customize labels and classnames for individual steps while keeping global defaults for the rest:
+
+- `step.footer.prevBtn.label` overrides `footerData.prevBtn.label`
+- `step.footer.prevBtn.className` overrides `footerData.prevBtn.className`
+- `step.footer.nextBtn.label` overrides `footerData.nextBtn.label`
+- `step.footer.nextBtn.className` overrides `footerData.nextBtn.className`
+
+If neither step-level nor global values are set, the defaults (`Back to ${prevStepLabel}` / `Continue to ${nextStepLabel}`) are used.
 
 <p dir="rtl"><a href="#table-of-contents">Back to top</a></p>
 
