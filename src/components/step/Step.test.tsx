@@ -1,5 +1,4 @@
 import { render, fireEvent, screen } from '@testing-library/react';
-import { expect } from 'storybook/test';
 import { Step, StepInterface } from './Step';
 import styles from '../stepper/Stepper.module.scss';
 

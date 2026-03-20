@@ -1,26 +1,26 @@
-const js = require('@eslint/js');
-const typescript = require('@typescript-eslint/eslint-plugin');
-const typescriptParser = require('@typescript-eslint/parser');
-const react = require('eslint-plugin-react');
-const reactHooks = require('eslint-plugin-react-hooks');
-const jest = require('eslint-plugin-jest');
-const testingLibrary = require('eslint-plugin-testing-library');
-const jestDom = require('eslint-plugin-jest-dom');
-const prettier = require('eslint-plugin-prettier');
-const storybook = require('eslint-plugin-storybook');
-const prettierConfig = require('eslint-config-prettier');
-const globals = require('globals');
+import js from '@eslint/js';
+import typescript from '@typescript-eslint/eslint-plugin';
+import typescriptParser from '@typescript-eslint/parser';
+import react from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
+import jest from 'eslint-plugin-jest';
+import testingLibrary from 'eslint-plugin-testing-library';
+import jestDom from 'eslint-plugin-jest-dom';
+import prettier from 'eslint-plugin-prettier';
+import storybook from 'eslint-plugin-storybook';
+import prettierConfig from 'eslint-config-prettier';
+import globals from 'globals';
 
-module.exports = [
+export default [
   // ESLint recommended
   js.configs.recommended,
 
   // Prettier config (disables conflicting rules)
   prettierConfig,
 
-  // Configuration files (eslint.config.js, etc.) - allow require imports
+  // Configuration files (eslint.config.mjs, etc.) - allow require imports
   {
-    files: ['eslint.config.js', '*.config.js', '*.config.ts'],
+    files: ['eslint.config.mjs', '*.config.js', '*.config.ts'],
     languageOptions: {
       globals: {
         ...globals.node,
@@ -31,14 +31,13 @@ module.exports = [
     },
     rules: {
       '@typescript-eslint/no-require-imports': 'off',
-      '@typescript-eslint/no-var-requires': 'off',
     },
   },
 
   // Main configuration
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
-    ignores: ['eslint.config.js', '*.config.js', '*.config.ts'],
+    ignores: ['eslint.config.mjs', '*.config.js', '*.config.ts'],
     languageOptions: {
       parser: typescriptParser,
       ecmaVersion: 6,
@@ -77,8 +76,9 @@ module.exports = [
       ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,
 
-      // React Hooks recommended
-      ...reactHooks.configs.recommended.rules,
+      // React Hooks (classic rules only, excluding React Compiler rules from v7)
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn',
 
       // Jest recommended + style
       ...jest.configs.recommended.rules,
@@ -93,7 +93,6 @@ module.exports = [
       // Original custom overrides
       'prettier/prettier': 'error',
       '@typescript-eslint/no-require-imports': 'off',
-      '@typescript-eslint/no-var-requires': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-vars': 'warn',
       'react/prop-types': 'off',
@@ -106,13 +105,5 @@ module.exports = [
   },
 
   // Storybook rules for story files only
-  {
-    files: ['**/*.stories.{js,jsx,ts,tsx}', '**/.storybook/**/*.{js,jsx,ts,tsx}'],
-    plugins: {
-      storybook: storybook,
-    },
-    rules: {
-      ...storybook.configs.recommended.rules,
-    },
-  },
+  ...storybook.configs['flat/recommended'],
 ];
