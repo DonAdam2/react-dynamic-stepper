@@ -22,24 +22,28 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x, 20.x, 22.x]
+        node-version: [22.x, 24.x]
         os: [ubuntu-latest, windows-latest]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-        # Jest 30 requires Node.js 18.x or higher
+        # Babel 8 requires Node.js ^22.18.0 || >=24.11.0, @testing-library/jest-dom 7 requires >=22
 
     steps:
       - name: Checkout Frontend Git Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.32.1
 
       - name: Setup Node ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node-version }}
+          cache: pnpm
 
       - name: Install Packages
-        run:  |
-          npm install -g pnpm@8.15.7
-          pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Run tests
         run: pnpm test
@@ -50,18 +54,22 @@ jobs:
     needs: [quality]
     steps:
       - name: Checkout Frontend Git Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
-      - name: Setup Node ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
         with:
-          node-version: ${{ matrix.node-version }}
+          version: 10.32.1
+
+      - name: Setup Node 24.x
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24.x
           registry-url: https://registry.npmjs.org
+          cache: pnpm
 
       - name: Install Packages
-        run: |
-          npm install -g pnpm
-          pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Build npm package
         run: pnpm build-lib
