@@ -15,5 +15,21 @@ const config: StorybookConfig = {
   typescript: {
     reactDocgen: 'react-docgen-typescript',
   },
+
+  // pre-bundle React entry points so Vite doesn't discover them late and reload with duplicate React chunks
+  viteFinal: (config) => ({
+    ...config,
+    optimizeDeps: {
+      ...config.optimizeDeps,
+      include: [
+        ...(config.optimizeDeps?.include ?? []),
+        'react',
+        'react-dom',
+        'react-dom/client',
+        'react/jsx-runtime',
+        'react/jsx-dev-runtime',
+      ],
+    },
+  }),
 };
 export default config;

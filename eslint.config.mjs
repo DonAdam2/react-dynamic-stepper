@@ -12,6 +12,11 @@ import prettierConfig from 'eslint-config-prettier';
 import globals from 'globals';
 
 export default [
+  // Build output
+  {
+    ignores: ['dist/**', 'lib/**', 'storybook-static/**'],
+  },
+
   // ESLint recommended
   js.configs.recommended,
 
@@ -20,7 +25,7 @@ export default [
 
   // Configuration files (eslint.config.mjs, etc.) - allow require imports
   {
-    files: ['eslint.config.mjs', '*.config.js', '*.config.ts'],
+    files: ['eslint.config.mjs', '*.config.js', '*.config.mjs', '*.config.ts'],
     languageOptions: {
       globals: {
         ...globals.node,
@@ -37,7 +42,7 @@ export default [
   // Main configuration
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
-    ignores: ['eslint.config.mjs', '*.config.js', '*.config.ts'],
+    ignores: ['eslint.config.mjs', '*.config.js', '*.config.mjs', '*.config.ts'],
     languageOptions: {
       parser: typescriptParser,
       ecmaVersion: 6,
@@ -99,7 +104,7 @@ export default [
     },
     settings: {
       react: {
-        version: 'detect',
+        version: '19.3',
       },
     },
   },
