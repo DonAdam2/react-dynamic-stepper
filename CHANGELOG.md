@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.1](https://github.com/DonAdam2/react-dynamic-stepper/compare/v4.0.0...v4.0.1) (2026-10-16)
+
 ## 4.0.0 (2026-03-20)
 
 
