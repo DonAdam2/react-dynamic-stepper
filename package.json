@@ -1,6 +1,6 @@
 {
   "name": "react-dynamic-stepper",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "description": "React stepper component (multi-step form wizard) with horizontal, vertical and inline layouts, RTL support and custom styling.",
   "main": "dist/react-dynamic-stepper.cjs.js",
   "module": "dist/react-dynamic-stepper.esm.js",
