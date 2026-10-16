@@ -14,8 +14,9 @@ module.exports = {
   testEnvironment: 'jsdom',
   // A map from regular expressions to paths to transformers
   transform: {
+    // resolve babel-jest from the project so it uses our @babel/core (jest-config bundles its own copy tied to Babel 7)
     '^.+\\.(js|jsx|mjs|cjs|ts|tsx)$': [
-      'babel-jest',
+      require.resolve('babel-jest'),
       { configFile: path.join(__dirname, '../babel.config.json') },
     ],
     '^.+\\.css$': '<rootDir>/transforms/cssTransform.js',
