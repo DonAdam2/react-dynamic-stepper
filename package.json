@@ -1,7 +1,7 @@
 {
   "name": "react-dynamic-stepper",
-  "version": "4.0.3",
-  "description": "Advanced and multi-feature react stepper component designed to be incredibly versatile for a variety of workflows and use cases.",
+  "version": "4.0.4",
+  "description": "React stepper component (multi-step form wizard) with horizontal, vertical and inline layouts, RTL support and custom styling.",
   "main": "dist/react-dynamic-stepper.cjs.js",
   "module": "dist/react-dynamic-stepper.esm.js",
   "files": [
@@ -45,7 +45,13 @@
     "inline-stepper",
     "stepper-navigation",
     "rtl-support",
-    "color-customizable-stepper"
+    "color-customizable-stepper",
+    "react-stepper",
+    "stepper-component",
+    "wizard",
+    "form-wizard",
+    "multi-step-form",
+    "step-progress"
   ],
   "author": "Adam Morsi <adam.morsi@yahoo.com> (https://github.com/DonAdam2)",
   "license": "MIT",

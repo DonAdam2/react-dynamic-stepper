@@ -16,7 +16,7 @@
 
 ## Overview:
 
-Advanced and multi-feature stepper component designed to be incredibly versatile for a variety of workflows and use cases.
+React stepper component (multi-step form wizard) with horizontal, vertical and inline layouts, RTL support and custom styling.
 
 It supports the following features:
 - Horizontal stepper UI.
