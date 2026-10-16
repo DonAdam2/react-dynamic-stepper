@@ -52,6 +52,10 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'workflow_dispatch' || github.event_name == 'release' }}
     needs: [quality]
+    # id-token lets npm authenticate this workflow via trusted publishing (OIDC), no npm token needed
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - name: Checkout Frontend Git Repo
         uses: actions/checkout@v7
@@ -74,8 +78,8 @@ jobs:
       - name: Build npm package
         run: pnpm build-lib
 
-      - name: Publish
-        run: npm publish --access public
+      # staged publishing (npm >= 11.15.0, bundled with Node 24.x): the version goes live
+      # only after a maintainer approves it with 2FA on npmjs.com (Staged Packages tab)
+      - name: Stage publish
+        run: npm stage publish --access public
         working-directory: lib
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
